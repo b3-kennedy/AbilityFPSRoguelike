@@ -7,6 +7,7 @@ public class SuperJump : Ability
     PlayerAbilities abilities;
     public override void OnInitialise()
     {
+        base.OnInitialise();
         rb = GetCaster().GetComponent<Rigidbody>();
         abilities = GetCaster().GetComponent<PlayerAbilities>();
     }

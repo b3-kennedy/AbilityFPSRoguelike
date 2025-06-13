@@ -54,7 +54,6 @@ public class Gun : MonoBehaviour
             UpdateAmmoCount();
             recoil = transform.parent.parent.parent.parent.GetComponent<Recoil>();
             recoil.SetData(gunData.recoilX, gunData.recoilY, gunData.recoilZ, gunData.snap, gunData.returnSpeed);
-            transform.parent.GetComponent<Rigidbody>().isKinematic = true;
             transform.parent.GetComponent<Collider>().enabled = false;
             transform.parent.localPosition = gunData.position;
             shootTimer = gunData.fireRate;

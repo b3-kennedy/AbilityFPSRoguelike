@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: Vacuum
   m_EditorClassIdentifier: 
   type: 0
-  abilityName: 
+  abilityName: Vacuum
+  projectile: {fileID: 8539410074321830074, guid: 4fa5daba38cf804478045d5202e2590d, type: 3}
+  projectileForce: 25
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 55
+  explosionRadius: 5
+  explosionForce: 10

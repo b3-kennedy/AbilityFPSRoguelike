@@ -20,7 +20,8 @@ public class Ability : ScriptableObject
 
     public virtual void OnInitialise()
     {
-
+        if (!string.IsNullOrEmpty(abilityName)) return;
+        abilityName = GetType().Name;
     }
 
     public virtual void UpdateAbility()

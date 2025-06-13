@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class ProjectileSingleFireGun : Gun
@@ -20,9 +21,11 @@ public class ProjectileSingleFireGun : Gun
         if (Input.GetButtonDown("Fire1") && shootTimer >= gunData.fireRate && ammo > 0)
         {
             GameObject spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.identity);
+            
             Vector3 hitPoint = Raycast();
             Vector3 dir = (hitPoint - firePoint.position).normalized;
-            spawnedProjectile.GetComponent<Rigidbody>().AddForce(dir * shootForce, ForceMode.Impulse);
+            spawnedProjectile.GetComponent<Projectile>().SetValues(shootForce, dir);
+            ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "JetpackBaseProjectile", firePoint.position, dir, shootForce);
             base.Recoil();
             //anim.SetTrigger("shoot");
             ammo--;

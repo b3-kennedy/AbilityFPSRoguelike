@@ -215,7 +215,7 @@ Transform:
   m_GameObject: {fileID: 1069386879929336252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.553}
+  m_LocalPosition: {x: 0, y: 0, z: -0.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1464,7 +1464,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerAbilities:
   - hotKey: 113
-    ability: {fileID: 11400000, guid: e590116bf4e56ce4eaa49001af5d402a, type: 2}
+    ability: {fileID: 11400000, guid: 35175fe69487f2a4fafa801c294eb73a, type: 2}
   - hotKey: 101
     ability: {fileID: 11400000, guid: b2f43e251f48f7b4c9f550c99b14c62c, type: 2}
   - hotKey: 102
