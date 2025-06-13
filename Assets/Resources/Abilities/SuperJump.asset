@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 103fb191c601ee345b5ae1578a7bae39, type: 3}
   m_Name: SuperJump
   m_EditorClassIdentifier: 
+  type: 0
   abilityName: Super Jump
+  cooldown: 10
   jumpForce: 15

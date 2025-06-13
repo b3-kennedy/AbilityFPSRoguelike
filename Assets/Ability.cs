@@ -11,6 +11,10 @@ public class Ability : ScriptableObject
 
     public string abilityName;
 
+    public float cooldown;
+
+    float lastCastTime = Mathf.NegativeInfinity;
+
     GameObject caster;
 
     public void SetCaster(GameObject c) 
@@ -20,8 +24,10 @@ public class Ability : ScriptableObject
 
     public virtual void OnInitialise()
     {
+        lastCastTime = Mathf.NegativeInfinity;
         if (!string.IsNullOrEmpty(abilityName)) return;
         abilityName = GetType().Name;
+        
     }
 
     public virtual void UpdateAbility()
@@ -34,9 +40,27 @@ public class Ability : ScriptableObject
         return caster; 
     }
 
+    bool CanCast()
+    {
+        Debug.Log($"Time: {Time.time}, Last: {lastCastTime}, Cooldown: {cooldown}, CanCast: {Time.time >= lastCastTime + cooldown}");
+        return Time.time >= lastCastTime + cooldown;
+    }
+
     public virtual void Cast()
     {
+
+
         if (type != AbilityType.ACTIVE) return;
-        Debug.Log($"Client {NetworkManager.Singleton.LocalClientId} has casted {abilityName}");
+
+        if (!CanCast()) return;
+
+        PerformCast();
+
+        lastCastTime = Time.time;
+    }
+
+    public virtual void PerformCast()
+    {
+
     }
 }

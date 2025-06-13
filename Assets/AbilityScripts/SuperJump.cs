@@ -12,7 +12,7 @@ public class SuperJump : Ability
         abilities = GetCaster().GetComponent<PlayerAbilities>();
     }
 
-    public override void Cast()
+    public override void PerformCast()
     {
         var altSwitch = abilities.GetAbilityByName("JetpackSwitch");
         if(altSwitch is JetpackAltAbilitySwitch switchScript) 
@@ -20,12 +20,10 @@ public class SuperJump : Ability
             if (!switchScript.isAlt)
             {
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                base.Cast();
             }
             else
             {
                 rb.AddForce(Vector3.down * jumpForce, ForceMode.Impulse);
-                base.Cast();
             }
         }
 

@@ -23,7 +23,7 @@ public class Vacuum : Ability
 
     }
 
-    public override void Cast()
+    public override void PerformCast()
     {
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask))
         {
