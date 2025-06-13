@@ -22,6 +22,17 @@ public class Ability : ScriptableObject
         caster = c;
     }
 
+    public GameObject GetCamera()
+    {
+        if (caster)
+        {
+            return caster.transform.Find("CameraHolder/Recoil/Camera").gameObject;
+        }
+        Debug.Log("Cannot get camera, caster is null");
+        return null;
+        
+    }
+
     public virtual void OnInitialise()
     {
         lastCastTime = Mathf.NegativeInfinity;

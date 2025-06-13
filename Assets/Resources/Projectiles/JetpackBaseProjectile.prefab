@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2376017674199818877}
   - component: {fileID: 7998235337165900450}
   - component: {fileID: 1115749776417379397}
+  - component: {fileID: -3336063567121701420}
   m_Layer: 0
   m_Name: JetpackBaseProjectile
   m_TagString: Untagged
@@ -136,7 +137,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1115749776417379397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,5 +148,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 353d96e46f7ecc0429ebca36d14fdf6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3336063567121701420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8539410074321830074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cefbfa925187ef04fbae13e5131e6a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

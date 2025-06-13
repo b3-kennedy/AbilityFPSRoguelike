@@ -10,15 +10,20 @@ public class JetpackAltAbilitySwitch : Ability
         isAlt = false;
     }
 
-    public override void UpdateAbility()
+    public override void PerformCast()
     {
-        if (Input.GetButtonDown("Fire2"))
-        {
-            isAlt = true;
-        }
-        else if (Input.GetButtonUp("Fire2"))
+        if (isAlt)
         {
             isAlt = false;
         }
+        else
+        {
+            isAlt = true;
+        }
+    }
+
+    public override void UpdateAbility()
+    {
+
     }
 }

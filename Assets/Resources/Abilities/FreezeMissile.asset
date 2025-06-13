@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f2a2ef2fab87354a91e22e6fd229c87, type: 3}
-  m_Name: JetpackAltAbilitySwitch
+  m_Script: {fileID: 11500000, guid: 92a38e6856a858a40add4cbfca8cc918, type: 3}
+  m_Name: FreezeMissile
   m_EditorClassIdentifier: 
   type: 0
-  abilityName: JetpackSwitch
-  cooldown: 0
-  isAlt: 0
+  abilityName: FreezeMissile
+  cooldown: 5
+  missile: {fileID: 7088200582941863265, guid: 08ead43e602b9954caeda4cc737b9b63, type: 3}
+  mask:
+    serializedVersion: 2
+    m_Bits: 55
