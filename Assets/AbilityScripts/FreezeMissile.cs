@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class FreezeMissile : Ability
@@ -6,6 +7,8 @@ public class FreezeMissile : Ability
     Transform spawn;
     Transform cam;
     public LayerMask mask;
+
+
 
     public override void OnInitialise()
     {
@@ -24,6 +27,7 @@ public class FreezeMissile : Ability
                 GameObject spawnedMissile = Instantiate(missile, spawn.position, Quaternion.Euler(-90f,0,0));
                 JetpackMissile missileScript = spawnedMissile.GetComponent<JetpackMissile>();
                 missileScript.SetTarget(hit.point);
+                ProjectileManager.Instance.SpawnTargetedProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "FreezeMissile", spawn.position, hit.point);
             }
         }
         

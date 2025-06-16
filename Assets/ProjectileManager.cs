@@ -69,6 +69,25 @@ public class ProjectileManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
+    public void SpawnTargetedProjectileServerRpc(ulong clientID, string projectileName, Vector3 spawnPosition, Vector3 targetPosition)
+    {
+        SpawnTargetedProjectileClientRpc(clientID, projectileName, spawnPosition, targetPosition);
+    }
+
+    [ClientRpc]
+    void SpawnTargetedProjectileClientRpc(ulong clientID, string projectileName, Vector3 spawnPosition, Vector3 targetPosition)
+    {
+        if (clientID == NetworkManager.Singleton.LocalClientId) return;
+
+        if(projectiles.TryGetValue(projectileName, out var projectile))
+        {
+            TargetedProjectile targetedProjectile = Instantiate(projectile, spawnPosition, projectile.transform.rotation).GetComponent<TargetedProjectile>();
+            targetedProjectile.SetTarget(targetPosition);
+        }
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
     public void CreateExplosionServerRpc(ulong clientID, Vector3 position, float radius, float force)
     {
         CreateExplosionClientRpc( clientID, position, radius, force);
