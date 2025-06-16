@@ -14,5 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   abilityName: JetpackSwitch
+  icon: {fileID: 21300000, guid: 10b23d1656fdee1418ff2ad88c442f50, type: 3}
   cooldown: 1
   isAlt: 0
+  alternateJump: {fileID: 21300000, guid: 235b5332d15c17a4b850faed3b84cf61, type: 3}
+  alternateImpulse: {fileID: 21300000, guid: c9c26431c9e72df468a71157fe14b942, type: 3}
+  baseJumpIcon: {fileID: 21300000, guid: f3d265ec9ca0f1b4db4acab412391394, type: 3}
+  baseImpulseIcon: {fileID: 21300000, guid: 0c267849595778e4c99bce5cdc6559f4, type: 3}

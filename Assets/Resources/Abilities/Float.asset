@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   abilityName: 
+  icon: {fileID: 0}
   cooldown: 0
   force: 0
   maxUpwardVelocity: 0
   maxFuel: 100
   fuelConsumptionMultiplier: 1
-  fuelRechargeMultiplier: 1
+  fuelRechargeMultiplier: 0.7
   fuel: 0

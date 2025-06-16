@@ -1,5 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "Ability", menuName = "Scriptable Objects/Ability")]
 public class Ability : ScriptableObject
@@ -10,6 +12,12 @@ public class Ability : ScriptableObject
     public AbilityType type;
 
     public string abilityName;
+
+    public Sprite icon;
+
+    Image abilityUIIcon;
+
+    Image cooldownIndicator;
 
     public float cooldown;
 
@@ -33,12 +41,28 @@ public class Ability : ScriptableObject
         
     }
 
+    public float GetLastCastTime()
+    {
+        return lastCastTime;
+    }
+
     public virtual void OnInitialise()
     {
         lastCastTime = Mathf.NegativeInfinity;
         if (!string.IsNullOrEmpty(abilityName)) return;
         abilityName = GetType().Name;
         
+    }
+
+    public void SetIcon(Image icon)
+    {
+        abilityUIIcon = icon;
+    }
+    
+
+    public void SetIconSprite(Sprite iconSprite)
+    {
+        abilityUIIcon.sprite = iconSprite;
     }
 
     public virtual void UpdateAbility()
@@ -51,21 +75,34 @@ public class Ability : ScriptableObject
         return caster; 
     }
 
-    bool CanCast()
+    public bool CanCast()
     {
-        Debug.Log($"Time: {Time.time}, Last: {lastCastTime}, Cooldown: {cooldown}, CanCast: {Time.time >= lastCastTime + cooldown}");
         return Time.time >= lastCastTime + cooldown;
+    }
+
+    public float GetCooldownPercent()
+    {
+        if (cooldown <= 0f) return 0f;
+
+        float remaining = Mathf.Clamp(lastCastTime + cooldown - Time.time, 0f, cooldown);
+        float percent = remaining / cooldown;
+        return Mathf.Round(percent * 1000f) / 1000f;
+    }
+
+    public float GetCooldownTimeRemaining()
+    {
+        return Mathf.Clamp(lastCastTime + cooldown - Time.time, 0f, cooldown);
     }
 
     public virtual void Cast()
     {
-
 
         if (type != AbilityType.ACTIVE) return;
 
         if (!CanCast()) return;
 
         PerformCast();
+        abilityUIIcon.GetComponent<AbilityIcon>().StartCooldownEffect();
 
         lastCastTime = Time.time;
     }

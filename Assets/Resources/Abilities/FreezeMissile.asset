@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   abilityName: FreezeMissile
-  cooldown: 5
+  icon: {fileID: 21300000, guid: e816e441ea41d174998cd773a18bdf78, type: 3}
+  cooldown: 30
   missile: {fileID: 7088200582941863265, guid: 08ead43e602b9954caeda4cc737b9b63, type: 3}
   mask:
     serializedVersion: 2

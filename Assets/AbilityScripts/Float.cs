@@ -19,12 +19,15 @@ public class Float : Ability
 
     public float fuel;
 
+    GameObject fuelBar;
+
     public override void OnInitialise()
     {
         fuel = maxFuel;
         rb = GetCaster().GetComponent<Rigidbody>();
         playerData = GetCaster().GetComponent<PlayerData>();
         move = GetCaster().GetComponent<PlayerMovement>();
+        fuelBar = GetCaster().transform.Find("PlayerInterface/FuelBackground/Fuel").gameObject;
         isJetPacking = false;
     }
 
@@ -53,6 +56,8 @@ public class Float : Ability
         {
             fuel += Time.deltaTime * fuelRechargeMultiplier;
         }
+
+        fuelBar.transform.localScale = new Vector3(fuelBar.transform.localScale.x, fuel/maxFuel , fuelBar.transform.localScale.z);
     }
 
 }

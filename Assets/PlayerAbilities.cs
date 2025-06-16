@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.Netcode;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class HotkeyAndAbility
@@ -14,6 +15,9 @@ public class PlayerAbilities : NetworkBehaviour
 {
 
     public List<HotkeyAndAbility> playerAbilities;
+
+    public Transform abilityIconParent;
+    public GameObject abilityIconPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,6 +36,14 @@ public class PlayerAbilities : NetworkBehaviour
     {
         foreach (var ah in playerAbilities)
         {
+            if(ah.ability.type == Ability.AbilityType.ACTIVE)
+            {
+                Image icon = Instantiate(abilityIconPrefab, abilityIconParent).GetComponent<Image>();
+                icon.sprite = ah.ability.icon;
+                icon.gameObject.GetComponent<AbilityIcon>().SetAbility(ah.ability);
+                ah.ability.SetIcon(icon);
+            }
+
             ah.ability.SetCaster(gameObject);
             ah.ability.OnInitialise();
         }
