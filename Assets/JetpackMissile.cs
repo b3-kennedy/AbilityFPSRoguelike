@@ -28,7 +28,23 @@ public class JetpackMissile : TargetedProjectile
         {
             speed = risingSpeed;
             riseTimer += Time.deltaTime;
-            if(riseTimer <= riseTime)
+
+            // Rotate Y and Z axes toward target while rising
+            Vector3 directionToTarget = (target - transform.position).normalized;
+            if (directionToTarget.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                Vector3 targetEuler = targetRotation.eulerAngles;
+                Vector3 currentEuler = transform.rotation.eulerAngles;
+
+                // Only change Y and Z rotation, keep X the same
+                Vector3 constrainedEuler = new Vector3(currentEuler.x, targetEuler.y, targetEuler.z);
+                Quaternion constrainedRotation = Quaternion.Euler(constrainedEuler);
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, constrainedRotation, rotationSpeed * Time.deltaTime);
+            }
+
+            if (riseTimer <= riseTime)
             {
                 rb.linearVelocity = transform.forward * speed;
             }
@@ -47,10 +63,18 @@ public class JetpackMissile : TargetedProjectile
             {
                 // Calculate the target rotation facing the target
                 Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
-
-                // Rotate towards the target rotation at rotationSpeed degrees per second
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
+        
+                // Extract only the X-axis rotation (pitch)
+                Vector3 targetEuler = targetRotation.eulerAngles;
+                Vector3 currentEuler = transform.rotation.eulerAngles;
+        
+                // Only change the X rotation, keep Y and Z the same
+                Vector3 constrainedEuler = new Vector3(targetEuler.x, currentEuler.y, currentEuler.z);
+                Quaternion constrainedRotation = Quaternion.Euler(constrainedEuler);
+        
+                // Rotate towards the constrained target rotation
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, constrainedRotation, rotationSpeed * Time.deltaTime);
+        
                 // Move forward in the current forward direction
                 rb.linearVelocity = transform.forward * speed;
             }

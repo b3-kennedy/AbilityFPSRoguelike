@@ -23,7 +23,7 @@ public class PlayerInterfaceManager : NetworkBehaviour
     void Start()
     {
         playerData = GetComponent<PlayerData>();
-        ammoUI.SetActive(false);
+        //ammoUI.SetActive(false);
     }
 
     public void OnGunPickup(GameObject gun)

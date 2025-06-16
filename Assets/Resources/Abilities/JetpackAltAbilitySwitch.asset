@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   abilityName: JetpackSwitch
-  cooldown: 0
+  cooldown: 1
   isAlt: 0

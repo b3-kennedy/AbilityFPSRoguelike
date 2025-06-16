@@ -54,7 +54,7 @@ public class Gun : MonoBehaviour
             UpdateAmmoCount();
             recoil = transform.parent.parent.parent.parent.GetComponent<Recoil>();
             recoil.SetData(gunData.recoilX, gunData.recoilY, gunData.recoilZ, gunData.snap, gunData.returnSpeed);
-            transform.parent.GetComponent<Collider>().enabled = false;
+            //transform.parent.GetComponent<Collider>().enabled = false;
             transform.parent.localPosition = gunData.position;
             shootTimer = gunData.fireRate;
             anim = transform.parent.GetComponent<Animator>();
@@ -128,9 +128,18 @@ public class Gun : MonoBehaviour
 
     void Reload()
     {
-        if (Input.GetKeyDown(KeyCode.R) && magCount > 0)
+        if(ammo <= 0)
         {
-            anim.SetTrigger("reload");
+            isReloading = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (anim)
+            {
+                anim.SetTrigger("reload");
+            }
+            
             isReloading = true;
         }
 
@@ -139,11 +148,14 @@ public class Gun : MonoBehaviour
             reloadTimer += Time.deltaTime;
             if (reloadTimer >= gunData.reloadTime)
             {
-                anim.SetTrigger("unreload");
+                if (anim)
+                {
+                    anim.SetTrigger("unreload");
+                }
+                
                 isReloading = false;
                 ammo = gunData.magazineSize;
                 reloadTimer = 0;
-                magCount--;
                 playerInterfaceManager.UpdateMagText(magCount);
                 playerInterfaceManager.UpdateAmmoText(ammo);
 

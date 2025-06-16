@@ -7,6 +7,7 @@ public class JetpackAltAbilitySwitch : Ability
 
     public override void OnInitialise()
     {
+        base.OnInitialise();
         isAlt = false;
     }
 
