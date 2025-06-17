@@ -9,7 +9,10 @@ public class PlayerData : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        
+        if (!IsOwner)
+        {
+            GetComponent<PlayerInterfaceManager>().playerInterface.SetActive(false);
+        }
     }
     public bool GetOwnership()
     {

@@ -679,7 +679,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1428,6 +1428,7 @@ GameObject:
   - component: {fileID: 3644309708731059464}
   - component: {fileID: 6736191666573353726}
   - component: {fileID: 6453596226380197099}
+  - component: {fileID: -47149351375010921}
   m_Layer: 7
   m_Name: Jetpack
   m_TagString: Untagged
@@ -1634,6 +1635,7 @@ MonoBehaviour:
   gunNameText: {fileID: 2265144934904145744}
   ammoText: {fileID: 6849284763405538758}
   magText: {fileID: 2980037825490487622}
+  playerInterface: {fileID: 2774669576626743209}
 --- !u!114 &6736191666573353726
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1675,6 +1677,19 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   jumpKey: 32
   sprintKey: 304
+--- !u!114 &-47149351375010921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7397207673657100299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bffcf54285b78945afcbc6173d387f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 0
 --- !u!1 &7607185232871171783
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: Launcher
   fireRate: 0.5
-  damage: 25
+  damage: 50
   magazineSize: 10
   reloadTime: 1
   position: {x: -0.181, y: -0.204, z: -0.634}

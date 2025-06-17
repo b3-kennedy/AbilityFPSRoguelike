@@ -25,6 +25,7 @@ public class ProjectileSingleFireGun : Gun
             Vector3 hitPoint = Raycast();
             Vector3 dir = (hitPoint - firePoint.position).normalized;
             spawnedProjectile.GetComponent<Projectile>().SetValues(shootForce, dir);
+            spawnedProjectile.GetComponent<JetpackProjectile>().SetDamage(gunData.damage);
             ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "JetpackBaseProjectile", firePoint.position, dir, shootForce);
             base.Recoil();
             //anim.SetTrigger("shoot");

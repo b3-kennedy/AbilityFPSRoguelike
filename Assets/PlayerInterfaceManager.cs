@@ -20,6 +20,8 @@ public class PlayerInterfaceManager : NetworkBehaviour
 
     GameObject collectionBox;
 
+    public GameObject playerInterface;
+
     void Start()
     {
         playerData = GetComponent<PlayerData>();

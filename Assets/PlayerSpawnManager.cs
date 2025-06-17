@@ -50,6 +50,7 @@ public class PlayerSpawnManager : NetworkBehaviour
     public void CreatePlayerServerRpc(ulong clientID, string selection)
     {
         NetworkObject spawnedPlayer = Instantiate(characters[selection].prefab).GetComponent<NetworkObject>();
+        spawnedPlayer.name = spawnedPlayer.name + "_Player"+clientID;
         spawnedPlayer.SpawnAsPlayerObject(clientID, false);
     }
 }

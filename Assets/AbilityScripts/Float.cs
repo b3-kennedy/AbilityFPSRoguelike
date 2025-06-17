@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
@@ -23,9 +24,13 @@ public class Float : Ability
 
     public override void OnInitialise()
     {
+        playerData = GetCaster().GetComponent<PlayerData>();
+        if (!playerData.GetOwnership()) return;
         fuel = maxFuel;
         rb = GetCaster().GetComponent<Rigidbody>();
-        playerData = GetCaster().GetComponent<PlayerData>();
+
+        
+        
         move = GetCaster().GetComponent<PlayerMovement>();
         fuelBar = GetCaster().transform.Find("PlayerInterface/FuelBackground/Fuel").gameObject;
         isJetPacking = false;
@@ -33,6 +38,7 @@ public class Float : Ability
 
     public override void UpdateAbility()
     {
+        if (!playerData.GetOwnership()) return;
         if (Input.GetKeyDown(playerData.jumpKey) && !move.IsGrounded())
         {
             isJetPacking = true;
@@ -41,7 +47,6 @@ public class Float : Ability
         {
             isJetPacking = false;
         }
-
 
         if (isJetPacking && fuel > 0)
         {

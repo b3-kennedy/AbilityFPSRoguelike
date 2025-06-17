@@ -17,8 +17,8 @@ MonoBehaviour:
   icon: {fileID: 0}
   cooldown: 0
   force: 12
-  maxUpwardVelocity: 10
+  maxUpwardVelocity: 5
   maxFuel: 100
   fuelConsumptionMultiplier: 50
-  fuelRechargeMultiplier: 45
-  fuel: 100.41042
+  fuelRechargeMultiplier: 40
+  fuel: 100.1794
