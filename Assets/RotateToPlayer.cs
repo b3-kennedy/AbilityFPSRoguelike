@@ -16,7 +16,11 @@ public class RotateToPlayer : MonoBehaviour
     {
         if(localPlayer == null)
         {
-            localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<PlayerData>().GetCameraGameObject().transform;
+            if(NetworkManager.Singleton.LocalClient.PlayerObject.gameObject != null)
+            {
+                localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject.gameObject.GetComponent<PlayerData>().GetCameraGameObject().transform;
+            }
+
         }
 
         transform.LookAt(localPlayer.position);

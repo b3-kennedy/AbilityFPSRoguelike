@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498d47d313c8d384989a36f1e73fcd86, type: 3}
   m_Name: Float
   m_EditorClassIdentifier: 
-  type: 0
-  abilityName: 
+  type: 1
+  abilityName: Jetpack
   icon: {fileID: 0}
   cooldown: 0
-  force: 0
-  maxUpwardVelocity: 0
+  force: 10
+  maxUpwardVelocity: 5
   maxFuel: 100
-  fuelConsumptionMultiplier: 1
-  fuelRechargeMultiplier: 0.7
-  fuel: 0
+  fuelConsumptionMultiplier: 50
+  fuelRechargeMultiplier: 20
+  fuel: 100

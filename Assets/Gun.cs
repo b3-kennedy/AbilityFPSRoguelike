@@ -41,6 +41,9 @@ public class Gun : MonoBehaviour
     RaycastHit[] hitBuffer = new RaycastHit[10];
 
     [HideInInspector] public UnityEvent sightAttached;
+    [HideInInspector] public UnityEvent shot;
+    [HideInInspector] public UnityEvent reload;
+    [HideInInspector] public UnityEvent shotHit;
 
     bool useAmmo = true;
 
@@ -170,6 +173,7 @@ public class Gun : MonoBehaviour
                 reloadTimer = 0;
                 playerInterfaceManager.UpdateMagText(magCount);
                 playerInterfaceManager.UpdateAmmoText(ammo);
+                reload.Invoke();
 
             }
         }
@@ -204,6 +208,7 @@ public class Gun : MonoBehaviour
             UnitData data = hit.collider.GetComponent<UnitData>();
             if(health && data && data.GetTeam() == UnitData.Team.BAD)
             {
+                shotHit.Invoke();
                 health.TakeDamageServerRpc(gunData.damage);
             }
         }

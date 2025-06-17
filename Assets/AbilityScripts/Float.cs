@@ -14,9 +14,9 @@ public class Float : Ability
     public float maxUpwardVelocity;
 
     public float maxFuel = 100f;
-    public float fuelConsumptionMultiplier = 1f;
+    public float fuelConsumptionMultiplier;
 
-    public float fuelRechargeMultiplier = 1f;
+    public float fuelRechargeMultiplier;
 
     public float fuel;
 

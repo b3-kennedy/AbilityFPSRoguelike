@@ -702,6 +702,15 @@ MonoBehaviour:
   sightAttached:
     m_PersistentCalls:
       m_Calls: []
+  shot:
+    m_PersistentCalls:
+      m_Calls: []
+  reload:
+    m_PersistentCalls:
+      m_Calls: []
+  shotHit:
+    m_PersistentCalls:
+      m_Calls: []
   firePoint: {fileID: 4755204973320641987}
   projectile: {fileID: 8539410074321830074, guid: 45e4202cdd708e14f90819b2b5a980b2, type: 3}
   shootForce: 25
@@ -1664,7 +1673,7 @@ MonoBehaviour:
   - hotKey: 99
     ability: {fileID: 11400000, guid: d23f274c88f62b34e8f5fbf15a3297a8, type: 2}
   - hotKey: 0
-    ability: {fileID: 11400000, guid: b523bc74e992e7a4ab17347f70e22e60, type: 2}
+    ability: {fileID: 11400000, guid: bb5885e2b2b0ff44abf63b4884b481b4, type: 2}
   abilityIconParent: {fileID: 6803295356328983666}
   abilityIconPrefab: {fileID: 2595220464093374704, guid: 89f72e156b620c048a545009f59761a2, type: 3}
 --- !u!114 &6453596226380197099

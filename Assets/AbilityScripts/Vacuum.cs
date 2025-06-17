@@ -19,6 +19,7 @@ public class Vacuum : Ability
         base.OnInitialise();
         firePoint = GetCaster().transform.Find("CameraHolder/Recoil/Camera/GunPosition/GunParent/Gun/FirePoint");
         cam = GetCamera().transform;
+        Debug.Log(cam);
         abilities = GetCaster().GetComponent<PlayerAbilities>();
 
     }

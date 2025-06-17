@@ -42,7 +42,6 @@ public class GunSway : MonoBehaviour
             gun = transform.GetChild(0);
             gunScript = gun.GetChild(0).GetComponent<Gun>();
             gunStartPos = gunScript.gunData.position;
-            Debug.Log(gunScript);
         }
     }
 
