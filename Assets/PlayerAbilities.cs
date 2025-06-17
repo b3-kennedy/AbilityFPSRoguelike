@@ -42,6 +42,7 @@ public class PlayerAbilities : NetworkBehaviour
                 icon.sprite = ah.ability.icon;
                 icon.gameObject.GetComponent<AbilityIcon>().SetAbility(ah.ability);
                 ah.ability.SetIcon(icon);
+                ah.ability.SetKey(ah.hotKey);
             }
 
             ah.ability.SetCaster(gameObject);

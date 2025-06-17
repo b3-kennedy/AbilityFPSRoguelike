@@ -25,9 +25,21 @@ public class Ability : ScriptableObject
 
     GameObject caster;
 
+    KeyCode key;
+
     public void SetCaster(GameObject c) 
     {
         caster = c;
+    }
+
+    public void SetKey(KeyCode code)
+    {
+        key = code;
+    }
+
+    public KeyCode GetKey()
+    {
+        return key;
     }
 
     public GameObject GetCamera()

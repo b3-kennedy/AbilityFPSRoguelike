@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce672677bd1a3e4468604efb29a2a6c5, type: 3}
-  m_Name: TESTGUN
+  m_Name: SlideGun
   m_EditorClassIdentifier: 
   gunName: Launcher
-  fireRate: 0.5
-  damage: 50
-  magazineSize: 10
-  reloadTime: 1
+  fireRate: 0.1
+  damage: 10
+  magazineSize: 15
+  reloadTime: 2.5
   position: {x: -0.181, y: -0.204, z: -0.634}
   adsPosition: {x: 0, y: 0, z: 0}
   adsTime: 5
   penetrationLimit: 0
-  recoilX: -5
+  recoilX: -2.5
   recoilY: 0
   recoilZ: 0
   snap: 5

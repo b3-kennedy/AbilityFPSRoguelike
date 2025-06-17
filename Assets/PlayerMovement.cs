@@ -62,6 +62,11 @@ public class PlayerMovement : NetworkBehaviour
 
     PlayerData playerData;
 
+    public bool canInput = true;
+    public bool enableSpeedControl = true;
+
+    public LayerMask groundLayer;
+
 
 
     // Start is called before the first frame update
@@ -96,17 +101,9 @@ public class PlayerMovement : NetworkBehaviour
     //    }
     //}
 
-
-    // Update is called once per frame
-    void Update()
+    void PlayerInput()
     {
-        if (!IsOwner) return;
-
-
-        //LadderControl();
-
-
-        magnitude = rb.linearVelocity.magnitude;
+        if (!canInput) return;
 
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
@@ -161,7 +158,20 @@ public class PlayerMovement : NetworkBehaviour
             targetSpeed = normalSpeed;
             normalOnLand = false;
         }
+    }
 
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (!IsOwner) return;
+
+        PlayerInput();
+
+        //LadderControl();
+
+
+        magnitude = rb.linearVelocity.magnitude;
 
 
         bool grounded = IsGrounded();
@@ -238,25 +248,44 @@ public class PlayerMovement : NetworkBehaviour
         speed = targetSpeedOnLand * landingSlowdownFactor; // Initial slowdown
     }
 
+
     public bool IsGrounded()
     {
-        bool rayHit = Physics.Raycast(groundCheck.position, -transform.up, 0.51f);
+        float radius = 0.5f;
+        float capsuleHeight = 2f;
+        float buffer = 0.05f; // small buffer below feet
 
-        return (isOnSlope() || rayHit);
+        // Capsule points in world space
+        Vector3 center = transform.position;
+        Vector3 bottom = center + Vector3.down * ((capsuleHeight / 2f) - radius);
+        Vector3 top = center + Vector3.up * ((capsuleHeight / 2f) - radius);
+
+        // Slightly extend bottom downward by a small buffer
+        bottom += Vector3.down * buffer;
+
+        return Physics.CheckCapsule(top, bottom, radius - 0.01f, groundLayer);
     }
 
-    public bool isOnSlope()
+    public bool IsOnSlope()
     {
-        if (Physics.Raycast(groundCheck.position, -transform.up, out RaycastHit hit, 1f))
+        RaycastHit hit;
+
+        float capsuleHeight = 2f;
+        float radius = 0.5f;
+        float castDistance = 0.1f; // How far below the capsule to cast
+
+        Vector3 center = transform.position;
+        Vector3 top = center + Vector3.up * ((capsuleHeight / 2f) - radius);
+        Vector3 bottom = center + Vector3.down * ((capsuleHeight / 2f) - radius);
+
+        // Cast down to detect the ground
+        if (Physics.CapsuleCast(top, bottom, radius - 0.01f, Vector3.down, out hit, castDistance + 0.01f, groundLayer))
         {
-            if (hit.normal.y != 1)
-            {
-                return true;
-            }
+            // Check if we're standing on a slope (i.e. not flat ground)
+            return hit.normal.y < 0.99f;
         }
+
         return false;
-        //Debug.Log()
-        //return );
     }
 
     private void FixedUpdate()
@@ -300,6 +329,8 @@ public class PlayerMovement : NetworkBehaviour
     void MovePlayer()
     {
 
+        if (!enableSpeedControl) return;
+
         moveDir = orientation.forward * vertical + orientation.right * horizontal;
 
         if (IsGrounded())
@@ -316,6 +347,8 @@ public class PlayerMovement : NetworkBehaviour
 
     void SpeedControl()
     {
+        if (!enableSpeedControl) return;
+
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         if (flatVel.magnitude > speed)
         {

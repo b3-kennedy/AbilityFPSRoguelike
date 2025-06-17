@@ -42,6 +42,8 @@ public class Gun : MonoBehaviour
 
     [HideInInspector] public UnityEvent sightAttached;
 
+    bool useAmmo = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -82,6 +84,16 @@ public class Gun : MonoBehaviour
     public bool CanShoot()
     {
         return canShoot;
+    }
+
+    public void SetUseAmmo(bool value)
+    {
+        useAmmo = value;
+    }
+
+    public bool GetUseAmmo()
+    {
+        return useAmmo;
     }
 
     public void SetPlayerInterface(PlayerInterfaceManager manager)
@@ -174,7 +186,7 @@ public class Gun : MonoBehaviour
         return isAiming;
     }
 
-    public virtual Vector3 Raycast()
+    public virtual Vector3 ProjectileRaycast()
     {
         //hit enemies here
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask)) 
@@ -182,6 +194,19 @@ public class Gun : MonoBehaviour
             return hit.point;
         }
         return cam.transform.position + cam.transform.forward * 1000f;
+    }
+
+    public virtual void Raycast()
+    {
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask))
+        {
+            Health health = hit.collider.GetComponent<Health>();
+            UnitData data = hit.collider.GetComponent<UnitData>();
+            if(health && data && data.GetTeam() == UnitData.Team.BAD)
+            {
+                health.TakeDamageServerRpc(gunData.damage);
+            }
+        }
     }
 
     void Aiming()
