@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -12,6 +13,12 @@ public class ProjectileManager : NetworkBehaviour
     Dictionary<string, GameObject> projectiles = new Dictionary<string, GameObject>();
 
     List<Rigidbody> objectToMove = new List<Rigidbody>();
+
+    public Dictionary<string, GameObject> GetProjectilesDictionary()
+    {
+        return projectiles;
+    }
+
 
     private void Awake()
     {
@@ -43,6 +50,33 @@ public class ProjectileManager : NetworkBehaviour
             {
                 Debug.LogWarning($"Duplicate character key found: {item.name}");
             }
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnThrowingKnifeServerRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force)
+    {
+        SpawnThrowingKnifeClientRpc(clientID, projectileName, position, direction, force);
+    }
+
+
+    [ClientRpc]
+    void SpawnThrowingKnifeClientRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force)
+    {
+        if (NetworkManager.Singleton.LocalClientId == clientID) return;
+
+        if (projectiles.TryGetValue(projectileName, out var projectile))
+        {
+            GameObject spawnedProjectile = Instantiate(projectile, position, Quaternion.identity);
+            spawnedProjectile.GetComponent<Projectile>().SetValues(force, direction);
+            spawnedProjectile.GetComponent<ExplosiveThrowingKnifeProjectile>().player = NetworkManager.Singleton.ConnectedClients[clientID].PlayerObject.gameObject;
+            spawnedProjectile.GetComponent<ExplosiveThrowingKnifeProjectile>().knifeType = ExplosiveThrowingKnifeProjectile.KnifeType.SERVER;
+            spawnedProjectile.name = projectileName + "Server";
+
+        }
+        else
+        {
+            Debug.Log($"Projectile with name {projectileName} not found");
         }
     }
 
@@ -89,16 +123,29 @@ public class ProjectileManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void MoveObjectOnServerRpc(ulong objectID, Vector3 dir, float force)
+    public void MoveObjectOnServerRpc(ulong objectID, Vector3 dir, float force, Vector3 destination)
     {
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var obj))
         {
             Rigidbody rb = obj.GetComponent<Rigidbody>();
             if (rb)
             {
-                rb.linearVelocity = dir * force;
+                if(Vector3.Distance(obj.transform.position, destination) >= 0.5f)
+                {
+                    rb.linearVelocity = dir * force;
+                }
+                else
+                {
+                    rb.linearVelocity = Vector3.zero;
+                }
+                
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     private void Update()
@@ -128,6 +175,15 @@ public class ProjectileManager : NetworkBehaviour
             {
                 rb.AddForce(dir * force, ForceMode.Impulse);
             }
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddForceToEnemyServerRpc(ulong objectID, Vector3 direction,float force ,ForceMode mode)
+    {
+        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var enemy))
+        {
+            enemy.GetComponent<Rigidbody>().AddForce(direction * force, mode);
         }
     }
 

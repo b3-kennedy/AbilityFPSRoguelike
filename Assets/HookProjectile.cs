@@ -19,7 +19,6 @@ public class HookProjectile : NetworkBehaviour
         if(data && data.GetWeightClass() == UnitData.WeightClass.LIGHT)
         {
             
-            Debug.Log("HOOK TO PLAYER");
             hookedRb = other.collider.GetComponent<Rigidbody>();
         }
         else
@@ -46,10 +45,10 @@ public class HookProjectile : NetworkBehaviour
         if (hooked)
         {
             
-            if(Vector3.Distance(hookedRb.transform.position, hookPoint.position) >= 1f)
+            if(Vector3.Distance(hookedRb.transform.position, hookPoint.position) >= 0.5f)
             {
                 Vector3 dir = (hookPoint.position - hookedRb.transform.position).normalized;
-                ProjectileManager.Instance.MoveObjectOnServerRpc(hookedRb.gameObject.GetComponent<NetworkObject>().NetworkObjectId, dir, 25f);
+                ProjectileManager.Instance.MoveObjectOnServerRpc(hookedRb.gameObject.GetComponent<NetworkObject>().NetworkObjectId, dir, 25f, hookPoint.position);
             }
             else
             {

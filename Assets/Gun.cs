@@ -99,6 +99,11 @@ public class Gun : MonoBehaviour
         return useAmmo;
     }
 
+    public GameObject GetCamera()
+    {
+        return cam;
+    }
+
     public void SetPlayerInterface(PlayerInterfaceManager manager)
     {
         playerInterfaceManager = manager;
