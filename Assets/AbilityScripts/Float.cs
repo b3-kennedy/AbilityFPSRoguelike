@@ -34,6 +34,19 @@ public class Float : Ability
         move = GetCaster().GetComponent<PlayerMovement>();
         fuelBar = GetCaster().transform.Find("PlayerInterface/FuelBackground/Fuel").gameObject;
         isJetPacking = false;
+
+        Debug.Log(force);
+    }
+
+    public override void FixedUpdateAbility()
+    {
+        if(isJetPacking && fuel > 0)
+        {
+            if (rb.linearVelocity.y < maxUpwardVelocity)
+            {
+                rb.AddForce(Vector3.up * force, ForceMode.Force);
+            }
+        }
     }
 
     public override void UpdateAbility()
@@ -48,13 +61,10 @@ public class Float : Ability
             isJetPacking = false;
         }
 
+
         if (isJetPacking && fuel > 0)
         {
             fuel -= Time.deltaTime * fuelConsumptionMultiplier;
-            if (rb.linearVelocity.y < maxUpwardVelocity)
-            {
-                rb.AddForce(Vector3.up * force, ForceMode.Force);
-            }
         }
 
         if (!isJetPacking && fuel < maxFuel)

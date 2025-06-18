@@ -12,7 +12,7 @@ public class ChargeShot : Ability
     {
         base.OnInitialise();
 
-        charge = 1f;
+        charge = 0f;
         gun = GetCaster().GetComponent<PlayerData>().GetGunParent().GetChild(0).GetChild(0).GetComponent<Gun>();
         gun.shotHit.RemoveAllListeners();
         gun.reload.RemoveAllListeners();
@@ -23,7 +23,7 @@ public class ChargeShot : Ability
 
     void OnReload()
     {
-        charge = 1f;
+        charge = 0f;
     }
 
     public override void PerformCast()
@@ -41,7 +41,7 @@ public class ChargeShot : Ability
                 }
             }
         }
-        charge = 1f;
+        charge = 0f;
     }
 
     void Charge()

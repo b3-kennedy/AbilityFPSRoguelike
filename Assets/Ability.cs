@@ -82,6 +82,11 @@ public class Ability : ScriptableObject
 
     }
 
+    public virtual void FixedUpdateAbility()
+    {
+
+    }
+
     protected GameObject GetCaster() 
     { 
         return caster; 

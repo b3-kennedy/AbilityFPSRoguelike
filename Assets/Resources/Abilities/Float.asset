@@ -16,9 +16,9 @@ MonoBehaviour:
   abilityName: Jetpack
   icon: {fileID: 0}
   cooldown: 0
-  force: 10
-  maxUpwardVelocity: 5
+  force: 20
+  maxUpwardVelocity: 10
   maxFuel: 100
   fuelConsumptionMultiplier: 50
   fuelRechargeMultiplier: 20
-  fuel: 100
+  fuel: 42.297165

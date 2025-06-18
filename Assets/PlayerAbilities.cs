@@ -65,6 +65,14 @@ public class PlayerAbilities : NetworkBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        foreach (var ah in playerAbilities)
+        {
+            ah.ability.FixedUpdateAbility();
+        }
+    }
+
     public Ability GetAbilityByName(string abilityName)
     {
         foreach (var ah in playerAbilities) 
