@@ -11,6 +11,8 @@ public class ProjectileManager : NetworkBehaviour
     public static ProjectileManager Instance;
     Dictionary<string, GameObject> projectiles = new Dictionary<string, GameObject>();
 
+    List<Rigidbody> objectToMove = new List<Rigidbody>();
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -84,6 +86,24 @@ public class ProjectileManager : NetworkBehaviour
             TargetedProjectile targetedProjectile = Instantiate(projectile, spawnPosition, projectile.transform.rotation).GetComponent<TargetedProjectile>();
             targetedProjectile.SetTarget(targetPosition);
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void MoveObjectOnServerRpc(ulong objectID, Vector3 dir, float force)
+    {
+        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var obj))
+        {
+            Rigidbody rb = obj.GetComponent<Rigidbody>();
+            if (rb)
+            {
+                rb.linearVelocity = dir * force;
+            }
+        }
+    }
+
+    private void Update()
+    {
+        
     }
 
 

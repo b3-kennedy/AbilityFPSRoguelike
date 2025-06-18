@@ -27,7 +27,7 @@ public class Vacuum : Ability
     public override void PerformCast()
     {
 
-        hitPoint = hitPoint = cam.transform.position + cam.transform.forward * 1000;
+        hitPoint = cam.transform.position + cam.transform.forward * 1000;
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask))
         {
             if (hit.collider) 

@@ -9,16 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 498d47d313c8d384989a36f1e73fcd86, type: 3}
-  m_Name: Float
+  m_Script: {fileID: 11500000, guid: ce41a1e98ef840a4dada5908e478f38e, type: 3}
+  m_Name: Hook
   m_EditorClassIdentifier: 
-  type: 1
-  abilityName: Jetpack
-  icon: {fileID: 0}
-  cooldown: 0
-  force: 20
-  maxUpwardVelocity: 5
-  maxFuel: 100
-  fuelConsumptionMultiplier: 50
-  fuelRechargeMultiplier: 20
-  fuel: 49.62535
+  prefab: {fileID: 7397207673657100299, guid: 6067f367415dd524ab1adc6cc3c41727, type: 3}
