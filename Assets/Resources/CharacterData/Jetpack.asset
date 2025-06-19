@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Jetpack
   m_EditorClassIdentifier: 
   prefab: {fileID: 7397207673657100299, guid: ed87a2d39d99ffe40a17966b7c6a7676, type: 3}
+  icon: {fileID: 9212580903834766737, guid: 075e786e9ff3a6b4f9cb5a8c6616b764, type: 3}

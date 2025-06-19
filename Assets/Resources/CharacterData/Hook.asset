@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Hook
   m_EditorClassIdentifier: 
   prefab: {fileID: 7397207673657100299, guid: 6067f367415dd524ab1adc6cc3c41727, type: 3}
+  icon: {fileID: 9212580903834766737, guid: 9a498fd1304c9c642ac2fe9441275e82, type: 3}

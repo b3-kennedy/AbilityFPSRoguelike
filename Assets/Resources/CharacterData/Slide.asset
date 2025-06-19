@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Slide
   m_EditorClassIdentifier: 
   prefab: {fileID: 7397207673657100299, guid: 8f8e31ff118c9c04eb3a8dafc8a4f964, type: 3}
+  icon: {fileID: 9212580903834766737, guid: a77e92495ec75424fbe9d15822330802, type: 3}

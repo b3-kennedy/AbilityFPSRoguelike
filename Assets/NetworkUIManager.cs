@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NetworkUIManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class NetworkUIManager : MonoBehaviour
     {
         NetworkManager.Singleton.StartHost();
         DisableObjects();
+        NetworkManager.Singleton.SceneManager.LoadScene("CharacterSelect", LoadSceneMode.Single);
     }
 
     void Join()
@@ -37,7 +39,7 @@ public class NetworkUIManager : MonoBehaviour
 
     void DisableObjects()
     {
-        startCam.SetActive(false);
+        //startCam.SetActive(false);
         canvas.SetActive(false);
     }
 }

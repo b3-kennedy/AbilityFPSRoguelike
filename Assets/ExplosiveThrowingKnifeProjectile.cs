@@ -53,10 +53,14 @@ public class ExplosiveThrowingKnifeProjectile : NetworkBehaviour
             transform.position = hit.point;
             spin = false;
             rb.isKinematic = true;
+            NetworkObject netObj = hitTransform.GetComponent<NetworkObject>();
+            if (netObj)
+            {
+                ulong parentID = netObj.NetworkObjectId;
+                player.GetComponent<ServerKnifeHolder>().SpawnKnifeServerRpc(clientId, "ThrowingKnife", transform.position, transform.rotation, parentID);
+            }
+            
 
-            ulong parentID = hitTransform.GetComponent<NetworkObject>().NetworkObjectId;
-            Debug.Log(hitTransform);
-            player.GetComponent<ServerKnifeHolder>().SpawnKnifeServerRpc(clientId, "ThrowingKnife", transform.position, transform.rotation, parentID);
             
             Destroy(gameObject);
 

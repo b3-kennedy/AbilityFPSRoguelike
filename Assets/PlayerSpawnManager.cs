@@ -7,7 +7,8 @@ public class PlayerSpawnManager : NetworkBehaviour
 
     public static PlayerSpawnManager Instance { get; private set; }
     public GameObject defaultPlayerPrefab;
-    Dictionary<string, CharacterData> characters = new Dictionary<string, CharacterData>();
+    public Dictionary<string, CharacterData> characters = new Dictionary<string, CharacterData>();
+    public List<ClientPick> picks = new List<ClientPick>();
 
 
     private void Awake()
@@ -21,6 +22,7 @@ public class PlayerSpawnManager : NetworkBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
+        LoadCharacterData();
     }
 
     private void LoadCharacterData()
@@ -43,13 +45,15 @@ public class PlayerSpawnManager : NetworkBehaviour
 
     private void Start()
     {
-        LoadCharacterData();
+        
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void CreatePlayerServerRpc(ulong clientID, string selection)
+    public void CreatePlayerServerRpc(ulong clientID)
     {
-        NetworkObject spawnedPlayer = Instantiate(characters[selection].prefab).GetComponent<NetworkObject>();
+        Debug.Log("Create Player");
+        string characterName = picks[(int)clientID].characterName;
+        NetworkObject spawnedPlayer = Instantiate(characters[characterName].prefab).GetComponent<NetworkObject>();
         spawnedPlayer.name = spawnedPlayer.name + "_Player"+clientID;
         spawnedPlayer.SpawnAsPlayerObject(clientID, false);
     }

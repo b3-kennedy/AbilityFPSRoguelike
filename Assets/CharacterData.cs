@@ -5,5 +5,6 @@ using System.Collections.Generic;
 public class CharacterData : ScriptableObject
 {
     public GameObject prefab;
+    public GameObject icon;
 
 }

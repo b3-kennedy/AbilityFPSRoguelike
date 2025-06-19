@@ -22,7 +22,7 @@ public class GameManager : NetworkBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P)) 
         {
-            PlayerSpawnManager.Instance.CreatePlayerServerRpc(NetworkManager.Singleton.LocalClientId, "Hook");
+            PlayerSpawnManager.Instance.CreatePlayerServerRpc(NetworkManager.Singleton.LocalClientId);
         }
     }
 }
