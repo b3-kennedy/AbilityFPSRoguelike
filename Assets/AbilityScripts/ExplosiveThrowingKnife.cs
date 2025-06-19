@@ -34,7 +34,7 @@ public class ExplosiveThrowingKnife : Ability
     {
         if (Input.GetButtonDown("Fire2"))
         {
-            GetCaster().GetComponent<ServerKnifeHolder>().DestroyKnivesServerRpc(explosionDamage);
+            GetCaster().GetComponent<ServerKnifeHolder>().DestroyKnivesServerRpc(NetworkManager.Singleton.LocalClientId,explosionDamage);
         }
     }
 }

@@ -46,7 +46,6 @@ public class ShotgunSingleFireGun : Gun
 
                     if (health && data.GetTeam() == UnitData.Team.BAD)
                     {
-                        Debug.Log("hit");
                         health.TakeDamageServerRpc(gunData.damage);
                     }
                 }

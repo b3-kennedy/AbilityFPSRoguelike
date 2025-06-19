@@ -22,7 +22,6 @@ public class ServerKnifeHolder : NetworkBehaviour
             spawnedProjectile.GetComponent<ExplosiveThrowingKnifeProjectile>().enabled = false;
             ParentKnifeClientRpc(parentID, spawnedProjectile.GetComponent<NetworkObject>().NetworkObjectId);
 
-            Debug.Log("called");
 
         }
     }
@@ -52,32 +51,34 @@ public class ServerKnifeHolder : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void DestroyKnivesServerRpc(float damage)
+    public void DestroyKnivesServerRpc(ulong clientID, float damage)
     {
-        DestroyKnivesClientRpc(damage);
+        DestroyKnivesClientRpc(clientID,damage);
     }
 
     [ClientRpc]
-    void DestroyKnivesClientRpc(float damage)
+    void DestroyKnivesClientRpc(ulong clientID, float damage)
     {
-        for (int i = 0; i < knives.Count; i++)
+
+        if(clientID == NetworkManager.Singleton.LocalClientId)
         {
-            if (knives[i].transform.parent)
+            for (int i = 0; i < knives.Count; i++)
             {
-                Health heal = knives[i].transform.parent.GetComponent<Health>();
-                UnitData data = knives[i].transform.parent.GetComponent<UnitData>();
-                if (heal && data.GetTeam() == UnitData.Team.BAD)
+                if (knives[i].transform.parent)
                 {
-                    heal.TakeDamageServerRpc(damage);
+                    Health heal = knives[i].transform.parent.GetComponent<Health>();
+                    UnitData data = knives[i].transform.parent.GetComponent<UnitData>();
+                    if (heal && data.GetTeam() == UnitData.Team.BAD)
+                    {
+                        heal.TakeDamageServerRpc(damage);
+                    }
                 }
             }
         }
-
         for (int i = 0; i < knives.Count; i++)
         {
             Destroy(knives[i]);
         }
-        knives.Clear();
         knives.Clear();
     }
 
