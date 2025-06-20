@@ -54,15 +54,17 @@ public class Charge : Ability
                 Rigidbody colliderRb = colliders[i].GetComponent<Rigidbody>();
                 if (colliderRb)
                 {
-                    Debug.Log(colliderRb.gameObject);
                     Vector3 direction = (GetCaster().transform.position - colliders[i].transform.position).normalized;
                     colliderRb.AddForce(-direction * pushForce, ForceMode.Impulse);
                 }
                 
 
             }
-            
-            rb.linearVelocity = movement.orientation.forward * chargeSpeed;
+            Vector3 currentVelocity = rb.linearVelocity;
+            Vector3 chargeVelocity = movement.orientation.forward * chargeSpeed;
+            chargeVelocity.y = currentVelocity.y;
+
+            rb.linearVelocity = chargeVelocity;
             timer += Time.deltaTime;
             if(timer >= duration)
             {

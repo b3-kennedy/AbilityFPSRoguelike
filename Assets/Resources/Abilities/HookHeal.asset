@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ef2219a02676e4192bd4d659d92b82, type: 3}
-  m_Name: Charge
+  m_Script: {fileID: 11500000, guid: b44917f45e45c4043a616edb999bdc2d, type: 3}
+  m_Name: HookHeal
   m_EditorClassIdentifier: 
   type: 0
-  abilityName: Charge
+  abilityName: HookHeal
   icon: {fileID: 0}
-  cooldown: 10
-  duration: 2
-  fireRateMultiplier: 4
-  chargeSpeed: 15
-  sensitivityMultiplier: 4
-  pushForce: 5
+  cooldown: 30
+  radius: 5
+  baseHeal: 2
