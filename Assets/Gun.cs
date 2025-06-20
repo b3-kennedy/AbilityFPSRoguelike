@@ -38,6 +38,8 @@ public class Gun : MonoBehaviour
 
     bool canShoot = true;
 
+    protected float fireRate;
+
     RaycastHit[] hitBuffer = new RaycastHit[10];
 
     [HideInInspector] public UnityEvent sightAttached;
@@ -62,6 +64,7 @@ public class Gun : MonoBehaviour
             //transform.parent.GetComponent<Collider>().enabled = false;
             transform.parent.localPosition = gunData.position;
             shootTimer = gunData.fireRate;
+            fireRate = gunData.fireRate;
             anim = transform.parent.GetComponent<Animator>();
             if (playerInterfaceManager)
             {
@@ -77,6 +80,16 @@ public class Gun : MonoBehaviour
             transform.parent.GetComponent<Collider>().enabled = true;
         }
 
+    }
+
+    public float GetFireRate()
+    {
+        return fireRate;
+    }
+
+    public void SetFireRate(float fr)
+    {
+        fireRate = fr;
     }
 
     public void SetCanShoot(bool value)

@@ -13,12 +13,12 @@ public class ProjectileSingleFireGun : Gun
 
         if (!CanShoot()) return;
 
-        if (shootTimer < gunData.fireRate)
+        if (shootTimer < fireRate)
         {
             shootTimer += Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Fire1") && shootTimer >= gunData.fireRate && ammo > 0)
+        if (Input.GetButtonDown("Fire1") && shootTimer >= fireRate && ammo > 0)
         {
             GameObject spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.identity);
             
@@ -35,7 +35,7 @@ public class ProjectileSingleFireGun : Gun
             }
             
             GetPlayerInterfaceManager().UpdateAmmoText(ammo);
-            shootTimer -= gunData.fireRate;
+            shootTimer -= fireRate;
         }
     }
 }

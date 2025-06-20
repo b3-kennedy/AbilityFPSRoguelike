@@ -7,12 +7,12 @@ public class AutomaticGun : Gun
 
         if (!CanShoot()) return;
 
-        if (shootTimer < gunData.fireRate)
+        if (shootTimer < fireRate)
         {
             shootTimer += Time.deltaTime;
         }
 
-        if (Input.GetButton("Fire1") && shootTimer >= gunData.fireRate && ammo > 0)
+        if (Input.GetButton("Fire1") && shootTimer >= fireRate && ammo > 0)
         {
 
             base.Raycast();
@@ -24,7 +24,7 @@ public class AutomaticGun : Gun
             }
             GetPlayerInterfaceManager().UpdateAmmoText(ammo);
             shot.Invoke();
-            shootTimer -= gunData.fireRate;
+            shootTimer -= fireRate;
         }
     }
 }

@@ -11,12 +11,12 @@ public class ShotgunSingleFireGun : Gun
     {
         if (!CanShoot()) return;
 
-        if (shootTimer < gunData.fireRate)
+        if (shootTimer < fireRate)
         {
             shootTimer += Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Fire1") && shootTimer >= gunData.fireRate && ammo > 0)
+        if (Input.GetButtonDown("Fire1") && shootTimer >= fireRate && ammo > 0)
         {
             base.Recoil();
             //anim.SetTrigger("shoot");
@@ -26,7 +26,7 @@ public class ShotgunSingleFireGun : Gun
             }
             GetPlayerInterfaceManager().UpdateAmmoText(ammo);
             shot.Invoke();
-            shootTimer -= gunData.fireRate;
+            shootTimer -= fireRate;
             for (int i = 0; i < pelletCount; i++)
             {
                 Vector3 direction = GetSpreadDirection(GetCamera().transform.forward, spreadAngle);

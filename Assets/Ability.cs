@@ -53,6 +53,16 @@ public class Ability : ScriptableObject
         
     }
 
+    public Gun GetGun()
+    {
+        if (caster)
+        {
+            return caster.transform.Find("CameraHolder/Recoil/Camera/GunPosition/GunParent/Gun").GetComponent<Gun>();
+        }
+        Debug.Log("Cannot get gun, caster is null");
+        return null;
+    }
+
     public float GetLastCastTime()
     {
         return lastCastTime;
