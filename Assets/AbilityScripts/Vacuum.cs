@@ -12,6 +12,8 @@ public class Vacuum : Ability
     public float explosionRadius;
     public float explosionForce;
     PlayerAbilities abilities;
+    public GameObject aoeIndicator;
+    GameObject spawnedAOEIndicator;
     int altValue = 1;
 
     public override void OnInitialise()
@@ -19,23 +21,45 @@ public class Vacuum : Ability
         base.OnInitialise();
         firePoint = GetCaster().transform.Find("CameraHolder/Recoil/Camera/GunPosition/GunParent/Gun/FirePoint");
         cam = GetCamera().transform;
-        Debug.Log(cam);
         abilities = GetCaster().GetComponent<PlayerAbilities>();
+
+    }
+
+    public override void Aim()
+    {
+        hitPoint = cam.transform.position + cam.transform.forward * 1000;
+        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask))
+        {
+            if (hit.collider)
+            {
+                hitPoint = hit.point;
+
+                if (!spawnedAOEIndicator)
+                {
+                    spawnedAOEIndicator = Instantiate(aoeIndicator, hit.point, Quaternion.identity);
+                    spawnedAOEIndicator.transform.localScale = Vector3.one * explosionRadius * 2;
+                }
+                else
+                {
+                    spawnedAOEIndicator.transform.position = hit.point;
+                }
+
+            }
+        }
+        else
+        {
+            if (spawnedAOEIndicator)
+            {
+                Destroy(spawnedAOEIndicator);
+            }
+        }
+
+
 
     }
 
     public override void PerformCast()
     {
-
-        hitPoint = cam.transform.position + cam.transform.forward * 1000;
-        if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask))
-        {
-            if (hit.collider) 
-            {
-                hitPoint = hit.point;
-            }
-        }
-
         GameObject spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.identity);
         Vector3 dir = (hitPoint - firePoint.position).normalized;
         spawnedProjectile.GetComponent<Projectile>().SetValues(projectileForce, dir);
@@ -56,9 +80,14 @@ public class Vacuum : Ability
             }
         }
 
-        
+
+        spawnedProjectile.GetComponent<VacuumProjectile>().onCollide.AddListener(Collide);
 
 
+    }
 
+    void Collide()
+    {
+        Destroy(spawnedAOEIndicator);
     }
 }

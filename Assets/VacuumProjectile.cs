@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VacuumProjectile : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class VacuumProjectile : MonoBehaviour
     GameObject playerWhoShot;
     ulong shooterID;
     public int altValue = 1;
+    [HideInInspector] public UnityEvent onCollide;
 
 
     private void OnCollisionEnter(Collision other)
@@ -26,7 +28,9 @@ public class VacuumProjectile : MonoBehaviour
             }
         }
         ProjectileManager.Instance.CreateExplosionServerRpc(NetworkManager.Singleton.LocalClientId, transform.position, explosionRadius, explosionForce * altValue);
+        onCollide.Invoke();
         Destroy(gameObject);
+        
 
     }
 }

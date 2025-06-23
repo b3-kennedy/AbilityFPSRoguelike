@@ -23,6 +23,7 @@ public class ProjectileSingleFireGun : Gun
             GameObject spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.identity);
             
             Vector3 hitPoint = ProjectileRaycast();
+            Debug.Log(hitPoint);
             Vector3 dir = (hitPoint - firePoint.position).normalized;
             spawnedProjectile.GetComponent<Projectile>().SetValues(shootForce, dir);
             spawnedProjectile.GetComponent<JetpackProjectile>().SetDamage(gunData.damage);

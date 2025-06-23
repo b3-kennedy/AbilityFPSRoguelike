@@ -36,7 +36,7 @@ public class PlayerAbilities : NetworkBehaviour
     {
         foreach (var ah in playerAbilities)
         {
-            if(ah.ability.type == Ability.AbilityType.ACTIVE)
+            if(ah.ability.type != Ability.AbilityType.PASSIVE)
             {
                 Image icon = Instantiate(abilityIconPrefab, abilityIconParent).GetComponent<Image>();
                 icon.sprite = ah.ability.icon;
@@ -58,10 +58,25 @@ public class PlayerAbilities : NetworkBehaviour
         foreach (var ah in playerAbilities) 
         {
             ah.ability.UpdateAbility();
-            if (Input.GetKeyDown(ah.hotKey)) 
+            if(ah.ability.type == Ability.AbilityType.INSTANT)
             {
-                ah.ability.Cast();
+                if (Input.GetKeyDown(ah.hotKey))
+                {
+                    ah.ability.Cast();
+                }
             }
+            else if(ah.ability.type == Ability.AbilityType.AIMABLE)
+            {
+                if (Input.GetKey(ah.hotKey) && ah.ability.CanCast())
+                {
+                    ah.ability.Aim();
+                }
+                else if (Input.GetKeyUp(ah.hotKey))
+                {
+                    ah.ability.Cast();
+                }
+            }
+
         }
     }
 

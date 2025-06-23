@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ef2219a02676e4192bd4d659d92b82, type: 3}
   m_Name: Charge
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   abilityName: Charge
   icon: {fileID: 0}
   cooldown: 10

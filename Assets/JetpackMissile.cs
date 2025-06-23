@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 
 public class JetpackMissile : TargetedProjectile
@@ -12,6 +13,9 @@ public class JetpackMissile : TargetedProjectile
     public MissileState state;
     public float riseTime = 3f;
     float riseTimer;
+    public float radius;
+    public float damage;
+    [HideInInspector] public UnityEvent onCollide;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -91,6 +95,7 @@ public class JetpackMissile : TargetedProjectile
 
     private void OnCollisionEnter(Collision other)
     {
+        onCollide.Invoke();
         Destroy(gameObject);
     }
 }

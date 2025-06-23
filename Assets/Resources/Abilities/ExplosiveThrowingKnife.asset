@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9ce6ded30665f4f8b0133979716528, type: 3}
   m_Name: ExplosiveThrowingKnife
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   abilityName: ExplosiveThrowingKnife
   icon: {fileID: 21300000, guid: b90693f2df43d8f4ca85c52b4398152f, type: 3}
   cooldown: 3

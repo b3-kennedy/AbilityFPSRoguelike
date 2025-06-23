@@ -653,7 +653,7 @@ MonoBehaviour:
   gunData: {fileID: 11400000, guid: f055bddaeb278de43811dc55f5e96904, type: 2}
   layerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 119
   sightAttached:
     m_PersistentCalls:
       m_Calls: []

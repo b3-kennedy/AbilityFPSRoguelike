@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12355c9f5f85a7c4a8a2e220eff413e0, type: 3}
   m_Name: Hook
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   abilityName: Hook
   icon: {fileID: 21300000, guid: b90693f2df43d8f4ca85c52b4398152f, type: 3}
   cooldown: 10

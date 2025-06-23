@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629206d8ee8b2ec43b2762a527a7aab2, type: 3}
   m_Name: ChargeShot
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   abilityName: Charge Shot
   icon: {fileID: 21300000, guid: b90693f2df43d8f4ca85c52b4398152f, type: 3}
   cooldown: 10

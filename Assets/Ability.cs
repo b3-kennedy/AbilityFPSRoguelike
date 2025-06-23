@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Ability : ScriptableObject
 {
 
-    public enum AbilityType {ACTIVE,PASSIVE};
+    public enum AbilityType {PASSIVE, INSTANT, AIMABLE};
 
     public AbilityType type;
 
@@ -121,10 +121,15 @@ public class Ability : ScriptableObject
         return Mathf.Clamp(lastCastTime + cooldown - Time.time, 0f, cooldown);
     }
 
+    public virtual void Aim()
+    {
+
+    }
+
     public virtual void Cast()
     {
 
-        if (type != AbilityType.ACTIVE) return;
+        if (type == AbilityType.PASSIVE) return;
 
         if (!CanCast()) return;
 

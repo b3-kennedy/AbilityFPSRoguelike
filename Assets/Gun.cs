@@ -210,7 +210,6 @@ public class Gun : MonoBehaviour
 
     public virtual Vector3 ProjectileRaycast()
     {
-        //hit enemies here
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask)) 
         {
             return hit.point;

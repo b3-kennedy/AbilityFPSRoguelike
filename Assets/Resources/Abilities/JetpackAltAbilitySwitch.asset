@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f2a2ef2fab87354a91e22e6fd229c87, type: 3}
   m_Name: JetpackAltAbilitySwitch
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   abilityName: JetpackSwitch
   icon: {fileID: 21300000, guid: 10b23d1656fdee1418ff2ad88c442f50, type: 3}
   cooldown: 1

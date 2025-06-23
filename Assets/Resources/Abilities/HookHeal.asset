@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44917f45e45c4043a616edb999bdc2d, type: 3}
   m_Name: HookHeal
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   abilityName: HookHeal
   icon: {fileID: 0}
   cooldown: 30
