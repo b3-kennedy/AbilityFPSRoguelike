@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0ea141542c33a44789a3cc52f77f037, type: 3}
-  m_Name: TestAbility3
+  m_Script: {fileID: 11500000, guid: 9c7943e205b958a4a959c3b0244c9745, type: 3}
+  m_Name: DetonateChargeBall
   m_EditorClassIdentifier: 
-  type: 0
-  abilityName: TestAbility3
-  icon: {fileID: 0}
+  type: 1
+  abilityName: DetonateChargeBall
+  icon: {fileID: 21300000, guid: 235b5332d15c17a4b850faed3b84cf61, type: 3}
   cooldown: 0

@@ -1,9 +1,11 @@
 using Unity.Netcode;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Instance;
+    public Ability[] abilities;
 
     private void Awake()
     {
@@ -16,6 +18,11 @@ public class GameManager : NetworkBehaviour
         Instance = this;
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        abilities = Resources.LoadAll<Ability>("Abilities");
     }
 
     private void Update()

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7878c0ae29ea9c45a5e96f2053f0f1c, type: 3}
+  m_Name: ChargeBall
+  m_EditorClassIdentifier: 
+  type: 1
+  abilityName: ChargeBall
+  icon: {fileID: 21300000, guid: f3d265ec9ca0f1b4db4acab412391394, type: 3}
+  cooldown: 5
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 247
+  ball: {fileID: 8539410074321830074, guid: cc031e39870978846839a3fa2a5fb736, type: 3}
+  force: 10
+  radius: 2.5

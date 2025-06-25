@@ -39,6 +39,10 @@ public class ChargeShot : Ability
                     Debug.Log(baseDamage + charge);
                     health.TakeDamageServerRpc(baseDamage + charge);
                 }
+                else if (hit.collider.GetComponent<ChargeBallProjectile>())
+                {
+                    hit.collider.GetComponent<ChargeBallProjectile>().AddDamage(baseDamage + charge);
+                }
             }
         }
         charge = 0f;

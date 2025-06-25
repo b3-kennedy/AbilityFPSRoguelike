@@ -217,7 +217,7 @@ public class Gun : MonoBehaviour
         return cam.transform.position + cam.transform.forward * 1000f;
     }
 
-    public virtual void Raycast()
+    public virtual RaycastHit Raycast()
     {
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, 1000, layerMask))
         {
@@ -228,7 +228,9 @@ public class Gun : MonoBehaviour
                 shotHit.Invoke();
                 health.TakeDamageServerRpc(gunData.damage);
             }
+            return hit;
         }
+        return default;
     }
 
     void Aiming()

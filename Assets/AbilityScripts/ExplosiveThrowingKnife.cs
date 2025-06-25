@@ -23,11 +23,12 @@ public class ExplosiveThrowingKnife : Ability
     {
         GameObject spawnedThrowingKnife = Instantiate(throwingKnifePrefab, throwPoint.position, Quaternion.identity);
         knives.Add(spawnedThrowingKnife);
-        spawnedThrowingKnife.GetComponent<Projectile>().SetValues(force, GetCamera().transform.forward);
+        string projectileID = System.Guid.NewGuid().ToString();
+        spawnedThrowingKnife.GetComponent<Projectile>().SetValues(force, GetCamera().transform.forward, projectileID);
         spawnedThrowingKnife.GetComponent<ExplosiveThrowingKnifeProjectile>().clientId = NetworkManager.Singleton.LocalClientId;
         spawnedThrowingKnife.GetComponent<ExplosiveThrowingKnifeProjectile>().player = GetCaster();
         spawnedThrowingKnife.GetComponent<ExplosiveThrowingKnifeProjectile>().knifeType = ExplosiveThrowingKnifeProjectile.KnifeType.LOCAL;
-        ProjectileManager.Instance.SpawnThrowingKnifeServerRpc(NetworkManager.Singleton.LocalClientId, "ThrowingKnife", throwPoint.position, GetCamera().transform.forward, force);
+        ProjectileManager.Instance.SpawnThrowingKnifeServerRpc(NetworkManager.Singleton.LocalClientId, "ThrowingKnife", throwPoint.position, GetCamera().transform.forward, force, projectileID);
     }
 
     public override void UpdateAbility()

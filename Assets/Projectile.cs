@@ -5,11 +5,13 @@ public class Projectile : MonoBehaviour
 {
     float force;
     Vector3 direction;
+    public string ID;
     
-    public void SetValues(float f, Vector3 dir)
+    public void SetValues(float f, Vector3 dir, string id)
     {
         force = f;
         direction = dir;
+        ID = id;
 
     }
 

@@ -11,7 +11,7 @@ public class ProjectileManager : NetworkBehaviour
 
     public static ProjectileManager Instance;
     Dictionary<string, GameObject> projectiles = new Dictionary<string, GameObject>();
-
+    private Dictionary<string, GameObject> spawnedProjectiles = new Dictionary<string, GameObject>();
     List<Rigidbody> objectToMove = new List<Rigidbody>();
 
     public Dictionary<string, GameObject> GetProjectilesDictionary()
@@ -54,21 +54,21 @@ public class ProjectileManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnThrowingKnifeServerRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force)
+    public void SpawnThrowingKnifeServerRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force, string projectileID)
     {
-        SpawnThrowingKnifeClientRpc(clientID, projectileName, position, direction, force);
+        SpawnThrowingKnifeClientRpc(clientID, projectileName, position, direction, force, projectileID);
     }
 
 
     [ClientRpc]
-    void SpawnThrowingKnifeClientRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force)
+    void SpawnThrowingKnifeClientRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force, string projectileID)
     {
         if (NetworkManager.Singleton.LocalClientId == clientID) return;
 
         if (projectiles.TryGetValue(projectileName, out var projectile))
         {
             GameObject spawnedProjectile = Instantiate(projectile, position, Quaternion.identity);
-            spawnedProjectile.GetComponent<Projectile>().SetValues(force, direction);
+            spawnedProjectile.GetComponent<Projectile>().SetValues(force, direction, projectileID);
             spawnedProjectile.GetComponent<ExplosiveThrowingKnifeProjectile>().player = NetworkManager.Singleton.ConnectedClients[clientID].PlayerObject.gameObject;
             spawnedProjectile.GetComponent<ExplosiveThrowingKnifeProjectile>().knifeType = ExplosiveThrowingKnifeProjectile.KnifeType.SERVER;
             spawnedProjectile.name = projectileName + "Server";
@@ -81,26 +81,48 @@ public class ProjectileManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnProjectileServerRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force)
+    public void SpawnProjectileServerRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force, string projectileID)
     {
-        SpawnProjectileClientRpc( clientID,  projectileName,  position,  direction,  force);
+        SpawnProjectileClientRpc( clientID,  projectileName,  position,  direction,  force, projectileID);
     }
 
     [ClientRpc]
-    void SpawnProjectileClientRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force)
+    void SpawnProjectileClientRpc(ulong clientID, string projectileName, Vector3 position, Vector3 direction, float force, string projectileID)
     {
         if (NetworkManager.Singleton.LocalClientId == clientID) return;
 
         if (projectiles.TryGetValue(projectileName, out var projectile))
         {
             GameObject spawnedProjectile = Instantiate(projectile, position, Quaternion.identity);
-            spawnedProjectile.GetComponent<Projectile>().SetValues(force, direction);
+            spawnedProjectile.GetComponent<Projectile>().SetValues(force, direction, projectileID);
+            spawnedProjectile.GetComponent<Projectile>().ID = projectileID;
             spawnedProjectile.name = projectileName + "Server";
+            spawnedProjectiles[projectileID] = spawnedProjectile;
 
         }
         else
         {
             Debug.Log($"Projectile with name {projectileName} not found");
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DestroyLocalProjectileFromServerRpc(string projectileID)
+    {
+        DestroyLocalProjectileFromClientRpc(projectileID);
+    }
+
+    [ClientRpc]
+    void DestroyLocalProjectileFromClientRpc(string projectileID)
+    {
+        if (spawnedProjectiles.TryGetValue(projectileID, out var projectile))
+        {
+            Destroy(projectile);
+            spawnedProjectiles.Remove(projectileID);
+        }
+        else
+        {
+            Debug.LogWarning($"Projectile ID {projectileID} not found in spawnedProjectiles.");
         }
     }
 
@@ -195,4 +217,6 @@ public class ProjectileManager : NetworkBehaviour
             projectile.Despawn();
         }
     }
+
+
 }

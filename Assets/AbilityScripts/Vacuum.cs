@@ -62,7 +62,10 @@ public class Vacuum : Ability
     {
         GameObject spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.identity);
         Vector3 dir = (hitPoint - firePoint.position).normalized;
-        spawnedProjectile.GetComponent<Projectile>().SetValues(projectileForce, dir);
+
+        string projectileID = System.Guid.NewGuid().ToString();
+
+        spawnedProjectile.GetComponent<Projectile>().SetValues(projectileForce, dir, projectileID);
 
         var altSwitch = abilities.GetAbilityByName("JetpackSwitch");
 
@@ -71,12 +74,12 @@ public class Vacuum : Ability
             if (!switchScript.isAlt)
             {
                 spawnedProjectile.GetComponent<VacuumProjectile>().altValue = 1;
-                ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "VacuumProjectile", firePoint.position, dir, projectileForce);
+                ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "VacuumProjectile", firePoint.position, dir, projectileForce, projectileID);
             }
             else
             {
                 spawnedProjectile.GetComponent<VacuumProjectile>().altValue = -1;
-                ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "AltVacuumProjectile", firePoint.position, dir, projectileForce);
+                ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "AltVacuumProjectile", firePoint.position, dir, projectileForce, projectileID);
             }
         }
 

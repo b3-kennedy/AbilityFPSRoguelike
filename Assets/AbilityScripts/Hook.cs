@@ -33,9 +33,10 @@ public class Hook : Ability
         }
         Vector3 dir = (hitPoint - firePoint.position).normalized;
         GameObject spawnedProjectile = Instantiate(hookProjectile, firePoint.position, Quaternion.identity);
-        spawnedProjectile.GetComponent<Projectile>().SetValues(force, dir);
+        string projectileID = System.Guid.NewGuid().ToString();
+        spawnedProjectile.GetComponent<Projectile>().SetValues(force, dir, projectileID);
         spawnedProjectile.GetComponent<HookProjectile>().hookPoint = hookPoint.transform;
         spawnedProjectile.GetComponent<HookProjectile>().player = GetCaster();
-        ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "HookProjectile", firePoint.transform.position, dir, force);
+        ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "HookProjectile", firePoint.transform.position, dir, force, projectileID);
     }
 }

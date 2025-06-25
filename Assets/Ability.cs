@@ -134,8 +134,12 @@ public class Ability : ScriptableObject
         if (!CanCast()) return;
 
         PerformCast();
-        abilityUIIcon.GetComponent<AbilityIcon>().StartCooldownEffect();
+        StartCooldown();
+    }
 
+    public void StartCooldown()
+    {
+        abilityUIIcon.GetComponent<AbilityIcon>().StartCooldownEffect();
         lastCastTime = Time.time;
     }
 
