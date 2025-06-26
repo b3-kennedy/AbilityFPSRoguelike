@@ -40,6 +40,8 @@ public class Gun : MonoBehaviour
 
     protected float fireRate;
 
+    float damageMultiplier = 1f;
+
     RaycastHit[] hitBuffer = new RaycastHit[10];
 
     [HideInInspector] public UnityEvent sightAttached;
@@ -159,6 +161,11 @@ public class Gun : MonoBehaviour
         recoil.RecoilFire();
     }
 
+    public bool IsReloading()
+    {
+        return isReloading;
+    }
+
     void Reload()
     {
         if(ammo <= 0)
@@ -178,6 +185,7 @@ public class Gun : MonoBehaviour
 
         if (isReloading)
         {
+            
             reloadTimer += Time.deltaTime;
             if (reloadTimer >= gunData.reloadTime)
             {
@@ -185,27 +193,39 @@ public class Gun : MonoBehaviour
                 {
                     anim.SetTrigger("unreload");
                 }
-                
+
+                reload.Invoke();
                 isReloading = false;
                 ammo = gunData.magazineSize;
                 reloadTimer = 0;
                 playerInterfaceManager.UpdateMagText(magCount);
                 playerInterfaceManager.UpdateAmmoText(ammo);
-                reload.Invoke();
+
+                
 
             }
         }
     }
 
+    public void FinishReload()
+    {
+        reloadTimer = gunData.reloadTime;
+    }
+
     public virtual void Shoot()
     {
-
+        
     }
 
 
     public bool IsADS()
     {
         return isAiming;
+    }
+
+    public void SetDamageMultiplier(float multiplier)
+    {
+        damageMultiplier = multiplier;
     }
 
     public virtual Vector3 ProjectileRaycast()
@@ -226,7 +246,12 @@ public class Gun : MonoBehaviour
             if(health && data && data.GetTeam() == UnitData.Team.BAD)
             {
                 shotHit.Invoke();
-                health.TakeDamageServerRpc(gunData.damage);
+                if(damageMultiplier < 1f)
+                {
+                    damageMultiplier = 1f;
+                }
+                Debug.Log(gunData.damage * damageMultiplier);
+                health.TakeDamageServerRpc(gunData.damage * damageMultiplier);
             }
             return hit;
         }

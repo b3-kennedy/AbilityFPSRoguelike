@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce672677bd1a3e4468604efb29a2a6c5, type: 3}
+  m_Name: TrickGun
+  m_EditorClassIdentifier: 
+  gunName: Trick
+  fireRate: 0.1
+  damage: 50
+  magazineSize: 1
+  reloadTime: 3
+  position: {x: -0.181, y: -0.204, z: -0.634}
+  adsPosition: {x: 0, y: 0, z: 0}
+  adsTime: 0
+  penetrationLimit: 1
+  recoilX: -5
+  recoilY: 0
+  recoilZ: 0
+  snap: 5
+  returnSpeed: 5
