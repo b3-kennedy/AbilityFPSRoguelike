@@ -66,6 +66,6 @@ public class PlayerInterfaceManager : NetworkBehaviour
 
     public void UpdateMagText(int mags)
     {
-        magText.text = mags.ToString();
+        //magText.text = mags.ToString();
     }
 }

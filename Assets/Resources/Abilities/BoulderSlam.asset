@@ -21,6 +21,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 247
-  radius: 5
+  radius: 2.5
   height: 5
   damage: 50
