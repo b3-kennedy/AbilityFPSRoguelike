@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Boulder : MonoBehaviour
@@ -6,6 +7,7 @@ public class Boulder : MonoBehaviour
     Rigidbody rb;
     float damage;
     float radius;
+    public GameObject effect;
 
     private void Start()
     {
@@ -27,7 +29,10 @@ public class Boulder : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Destroy(gameObject);
+        Instantiate(effect, transform.position, effect.transform.rotation);
+        //ObjectSpawnManager.Instance.SpawnEffectServerRpc(NetworkManager.Singleton.LocalClientId, transform.position, "DustExplosion");
+        
+
         Collider[] colliders = new Collider[50];
         int count = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders);
         for (int i = 0; i < count; i++)
@@ -40,5 +45,7 @@ public class Boulder : MonoBehaviour
             }
         }
         ProjectileManager.Instance.DestroyLocalProjectileFromServerRpc(GetComponent<Projectile>().ID);
+        Destroy(gameObject);
+
     }
 }

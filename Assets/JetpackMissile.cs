@@ -16,6 +16,8 @@ public class JetpackMissile : TargetedProjectile
     public float radius;
     public float damage;
     [HideInInspector] public UnityEvent onCollide;
+
+    public GameObject effect;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -96,6 +98,7 @@ public class JetpackMissile : TargetedProjectile
     private void OnCollisionEnter(Collision other)
     {
         onCollide.Invoke();
+        Instantiate(effect, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

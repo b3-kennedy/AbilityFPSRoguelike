@@ -1,9 +1,12 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class JetpackProjectile : MonoBehaviour
 {
     float damage;
     bool hasHit = false;
+    public GameObject explosionEffect;
+    GameObject spawnedEffect;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,6 +31,8 @@ public class JetpackProjectile : MonoBehaviour
         if (hasHit) return;
         hasHit = true;
         Collider[] colliders = new Collider[50];
+        spawnedEffect = Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        //ObjectSpawnManager.Instance.SpawnEffectServerRpc(NetworkManager.Singleton.LocalClientId, transform.position, "SmallExplosion");
         int count = Physics.OverlapSphereNonAlloc(transform.position, 1.5f, colliders);
         for (int i = 0; i < count; i++)
         {

@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353d96e46f7ecc0429ebca36d14fdf6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 
 --- !u!114 &-3336063567121701420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,3 +163,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cefbfa925187ef04fbae13e5131e6a0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionEffect: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
