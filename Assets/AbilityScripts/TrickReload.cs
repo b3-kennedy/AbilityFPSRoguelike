@@ -40,13 +40,15 @@ public class TrickReload : Ability
         reloadInterfaceRect = reloadInterface.GetComponent<RectTransform>();
         hasMissed = false;
         combo = 0;
-        gun.reload.RemoveAllListeners();
         gun.reload.AddListener(Reload);
-
-        gun.shotHit.RemoveAllListeners();
         gun.shotHit.AddListener(Hit);
 
 
+    }
+
+    public int GetCombo()
+    {
+        return combo;
     }
 
     void Hit()
@@ -79,8 +81,6 @@ public class TrickReload : Ability
                 pointStart = reloadPoint.transform.position.x - widthMultiplier;
                 pointEnd = reloadPoint.transform.position.x + widthMultiplier;
                 reloadPoint.transform.localScale = new Vector2(reloadPointWidth, reloadPoint.transform.localScale.y);
-
-                Debug.Log(combo);
             }
 
             timer += Time.deltaTime;

@@ -14,8 +14,6 @@ public class ChargeShot : Ability
 
         charge = 0f;
         gun = GetCaster().GetComponent<PlayerData>().GetGunParent().GetChild(0).GetChild(0).GetComponent<Gun>();
-        gun.shotHit.RemoveAllListeners();
-        gun.reload.RemoveAllListeners();
         gun.shotHit.AddListener(Charge);
         gun.reload.AddListener(OnReload);
         cam = GetCamera();

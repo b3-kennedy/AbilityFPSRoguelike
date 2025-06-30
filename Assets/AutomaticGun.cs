@@ -23,7 +23,7 @@ public class AutomaticGun : Gun
                 ammo--;
             }
             GetPlayerInterfaceManager().UpdateAmmoText(ammo);
-            shot.Invoke();
+            base.shot.Invoke();
             shootTimer -= fireRate;
         }
     }

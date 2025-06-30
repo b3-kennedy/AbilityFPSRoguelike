@@ -19,6 +19,11 @@ public class ProjectileManager : NetworkBehaviour
         return projectiles;
     }
 
+    public Dictionary<string, GameObject> GetSpawnedProjectilesDictionary()
+    {
+        return spawnedProjectiles;
+    }
+
 
     private void Awake()
     {

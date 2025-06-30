@@ -17,7 +17,6 @@ public class ChargeBall : Ability
     {
         base.OnInitialise();
         gun = GetGun();
-        gun.shot.RemoveAllListeners();
         gun.shot.AddListener(OnShot);
         firePoint = GetCaster().transform.Find("CameraHolder/Recoil/Camera/GunPosition/GunParent/Gun/FirePoint");
         cam = GetCamera();

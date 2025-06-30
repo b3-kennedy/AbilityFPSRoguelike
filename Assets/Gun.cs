@@ -51,6 +51,14 @@ public class Gun : MonoBehaviour
 
     bool useAmmo = true;
 
+    private void Awake()
+    {
+        sightAttached.RemoveAllListeners();
+        shot.RemoveAllListeners();
+        reload.RemoveAllListeners();
+        shotHit.RemoveAllListeners();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
