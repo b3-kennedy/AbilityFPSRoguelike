@@ -15,15 +15,26 @@ public class Health : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void TakeDamageServerRpc(float dmg)
+    public void TakeDamageServerRpc(float dmg, int critChance = 0, float critMultiplier = 1f)
     {
-        TakeDamageClientRpc(dmg);
+        TakeDamageClientRpc(dmg, critChance, critMultiplier);
     }
 
     [ClientRpc]
-    void TakeDamageClientRpc(float dmg)
+    void TakeDamageClientRpc(float dmg, int critChance = 0, float critMultiplier = 1f)
     {
-        health -= dmg;
+        int randomNum = Random.Range(1, 101);
+
+        float damage = dmg;
+
+        if(randomNum <= critChance)
+        {
+            damage *= critMultiplier;
+            Debug.Log("crit for " + damage);
+        }
+
+
+        health -= damage;
         if (healthBar)
         {
             UpdateHealthBar();

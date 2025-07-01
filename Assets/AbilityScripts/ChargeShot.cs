@@ -32,15 +32,18 @@ public class ChargeShot : Ability
             {
                 Health health = hit.collider.GetComponent<Health>();
                 UnitData data = hit.collider.GetComponent<UnitData>();
-                if(health && data.GetTeam() == UnitData.Team.BAD)
+
+                if (health && data.GetTeam() == UnitData.Team.BAD)
                 {
                     Debug.Log(baseDamage + charge);
-                    health.TakeDamageServerRpc(baseDamage + charge);
+                    health.TakeDamageServerRpc(baseDamage + charge, gun.GetCritChance(), gun.GetCritDamageMultiplier());
                 }
                 else if (hit.collider.GetComponent<ChargeBallProjectile>())
                 {
                     hit.collider.GetComponent<ChargeBallProjectile>().AddDamage(baseDamage + charge);
                 }
+
+
             }
         }
         charge = 0f;

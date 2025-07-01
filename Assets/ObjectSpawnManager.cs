@@ -71,11 +71,12 @@ public class ObjectSpawnManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void SpawnObjectServerRpc(ulong clientID, Vector3 position, string objectName)
+    public void SpawnUpgradeServerRpc(ulong clientID, Vector3 position, string objectName, string upgradeName)
     {
         if(objects.TryGetValue(objectName, out var selectedObject))
         {
             GameObject obj = Instantiate(selectedObject, position, selectedObject.transform.rotation);
+            obj.GetComponent<UpgradeHolder>().effect = GameManager.Instance.upgrades[upgradeName].effect;
             obj.GetComponent<NetworkObject>().Spawn();
         }
     }

@@ -23,11 +23,12 @@ public class ProjectileSingleFireGun : Gun
             GameObject spawnedProjectile = Instantiate(projectile, firePoint.position, Quaternion.identity);
             
             Vector3 hitPoint = ProjectileRaycast();
-            Debug.Log(hitPoint);
             Vector3 dir = (hitPoint - firePoint.position).normalized;
             string projectileID = System.Guid.NewGuid().ToString();
             spawnedProjectile.GetComponent<Projectile>().SetValues(shootForce, dir, projectileID);
-            spawnedProjectile.GetComponent<JetpackProjectile>().SetDamage(gunData.damage);
+            int randomNum = Random.Range(1, 101);
+            spawnedProjectile.GetComponent<JetpackProjectile>().SetDamage(gunData.damage, this);
+
             ProjectileManager.Instance.SpawnProjectileServerRpc(NetworkManager.Singleton.LocalClientId, "JetpackBaseProjectile", firePoint.position, dir, shootForce, projectileID);
             base.Recoil();
             //anim.SetTrigger("shoot");

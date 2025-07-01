@@ -7,6 +7,7 @@ public class JetpackProjectile : MonoBehaviour
     bool hasHit = false;
     public GameObject explosionEffect;
     GameObject spawnedEffect;
+    Gun gun;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -14,10 +15,11 @@ public class JetpackProjectile : MonoBehaviour
         
     }
 
-    public void SetDamage(float dmg)
+    public void SetDamage(float dmg, Gun g)
     {
 
         damage = dmg;
+        gun = g;
     }
 
     // Update is called once per frame
@@ -45,7 +47,7 @@ public class JetpackProjectile : MonoBehaviour
                 Health health = colliders[i].GetComponent<Health>();
                 if (health != null)
                 {
-                    health.TakeDamageServerRpc(damage);
+                    health.TakeDamageServerRpc(damage, gun.GetCritChance(), gun.GetCritDamageMultiplier());
                 }
             }
         }

@@ -67,6 +67,9 @@ public class PlayerMovement : NetworkBehaviour
 
     public LayerMask groundLayer;
 
+    public int maxNumberOfJumps = 1;
+    int numberOfJumps;
+
 
 
     // Start is called before the first frame update
@@ -83,7 +86,14 @@ public class PlayerMovement : NetworkBehaviour
         {
             cam = playerLook.cam;
         }
+        numberOfJumps = maxNumberOfJumps;
 
+    }
+
+    public void IncreaseNumberOfJumps()
+    {
+        maxNumberOfJumps++;
+        numberOfJumps = maxNumberOfJumps;
     }
 
     //void LadderControl()
@@ -114,9 +124,10 @@ public class PlayerMovement : NetworkBehaviour
         // Check if the player is moving forward relative to their orientation
         bool isMovingForward = Input.GetKey(KeyCode.W);
 
-        if (Input.GetKeyDown(playerData.jumpKey) && IsGrounded())
+        if (Input.GetKeyDown(playerData.jumpKey) && (IsGrounded() || numberOfJumps > 0))
         {
             Jump();
+            numberOfJumps--;
         }
 
 
@@ -180,7 +191,7 @@ public class PlayerMovement : NetworkBehaviour
 
         if (wasAirborne && grounded)
         {
-            //OnLand();
+            OnLand();
             wasAirborne = false;
         }
 
@@ -233,13 +244,10 @@ public class PlayerMovement : NetworkBehaviour
     //    return false;
     //}
 
-    //void OnLand()
-    //{
-    //    landingSlowdownFactor = (1 - (targetSpeed / 10));
-    //    targetSpeedOnLand = targetSpeed;
-    //    //rb.velocity = Vector3.zero;
-    //    StartLandingSlowdown();
-    //}
+    void OnLand()
+    {
+        numberOfJumps = maxNumberOfJumps;
+    }
 
     void StartLandingSlowdown()
     {

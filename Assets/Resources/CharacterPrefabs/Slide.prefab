@@ -1413,6 +1413,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  maxNumberOfJumps: 1
 --- !u!114 &2346969234001322514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1641,6 +1642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97180066d63cc524b9d167ec350d6a33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   added:
     m_PersistentCalls:
       m_Calls: []

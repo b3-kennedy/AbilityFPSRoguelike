@@ -18,6 +18,8 @@ MonoBehaviour:
   magazineSize: 10
   reloadTime: 1
   position: {x: -0.181, y: -0.204, z: -0.634}
+  critChance: 0
+  critDamageMultiplier: 1.5
   adsPosition: {x: 0, y: 0, z: 0}
   adsTime: 5
   penetrationLimit: 0

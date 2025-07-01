@@ -9,6 +9,8 @@ public class GunData : ScriptableObject
     public int magazineSize;
     public float reloadTime;
     public Vector3 position = new Vector3(-0.134f,-0.162f,0.331f);
+    public int critChance;
+    public float critDamageMultiplier;
 
     public Vector3 adsPosition;
     public float adsTime;

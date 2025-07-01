@@ -1,7 +1,5 @@
-using System;
+
 using System.Collections.Generic;
-using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
 using UnityEngine.Events;
@@ -51,6 +49,9 @@ public class Gun : MonoBehaviour
 
     bool useAmmo = true;
 
+    int critChance;
+    float critDamageMultiplier;
+
     private void Awake()
     {
         sightAttached.RemoveAllListeners();
@@ -65,6 +66,8 @@ public class Gun : MonoBehaviour
         if (transform.parent.parent && transform.parent.parent.name == "GunPosition")
         {
             ammo = gunData.magazineSize;
+            critChance = gunData.critChance;
+            critDamageMultiplier = gunData.critDamageMultiplier;
             cam = transform.parent.parent.parent.gameObject;
             playerData = transform.parent.parent.parent.parent.parent.parent.GetComponent<PlayerData>();
             playerInterfaceManager = transform.parent.parent.parent.parent.parent.parent.GetComponent<PlayerInterfaceManager>();
@@ -100,6 +103,21 @@ public class Gun : MonoBehaviour
     public void SetFireRate(float fr)
     {
         fireRate = fr;
+    }
+
+    public void SetCritChance(int chance)
+    {
+        critChance = chance;
+    }
+
+    public int GetCritChance()
+    {
+        return critChance;
+    }
+
+    public float GetCritDamageMultiplier()
+    {
+        return critDamageMultiplier;
     }
 
     public void SetCanShoot(bool value)
@@ -251,15 +269,20 @@ public class Gun : MonoBehaviour
         {
             Health health = hit.collider.GetComponent<Health>();
             UnitData data = hit.collider.GetComponent<UnitData>();
+
+
             if(health && data && data.GetTeam() == UnitData.Team.BAD)
             {
-                shotHit.Invoke();
-                if(damageMultiplier < 1f)
+                if (damageMultiplier < 1f)
                 {
                     damageMultiplier = 1f;
                 }
-                Debug.Log(gunData.damage * damageMultiplier);
-                health.TakeDamageServerRpc(gunData.damage * damageMultiplier);
+
+                health.TakeDamageServerRpc(gunData.damage * damageMultiplier, critChance, critDamageMultiplier);
+
+                shotHit.Invoke();
+
+                
             }
             return hit;
         }
