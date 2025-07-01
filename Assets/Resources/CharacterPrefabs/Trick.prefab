@@ -1340,6 +1340,7 @@ GameObject:
   - component: {fileID: -3892197536126651320}
   - component: {fileID: 4280837174652735475}
   - component: {fileID: 3552698603652114154}
+  - component: {fileID: -2581437706179703523}
   m_Layer: 7
   m_Name: Trick
   m_TagString: Untagged
@@ -1655,6 +1656,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f73647bc413c6a47a2cf019caa3171c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &-2581437706179703523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7397207673657100299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97180066d63cc524b9d167ec350d6a33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  added:
+    m_PersistentCalls:
+      m_Calls: []
+  upgrades: []
 --- !u!1 &7555454728022338277
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,11 +2,12 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Events;
-using System.ComponentModel.Design.Serialization;
+using Unity.Netcode;
+using System.Runtime.Serialization;
 
 
 
-public class UpgradeHandler : MonoBehaviour
+public class UpgradeHandler : NetworkBehaviour
 {
     [HideInInspector] public UnityEvent added;
 
@@ -19,6 +20,8 @@ public class UpgradeHandler : MonoBehaviour
 
     public void AddUpgrade(UpgradeEffect upgrade)
     {
+        if (!IsOwner) return;
+
         if (!upgrades.Contains(upgrade))
         {
             upgrade.count = 0;
@@ -62,7 +65,7 @@ public class UpgradeHandler : MonoBehaviour
             {
                 AddUpgrade(upgrade);
             }
-            Destroy(other.gameObject);
+            ObjectSpawnManager.Instance.DestroyObjectServerRpc(other.GetComponent<NetworkObject>().NetworkObjectId);
         }
     }
 

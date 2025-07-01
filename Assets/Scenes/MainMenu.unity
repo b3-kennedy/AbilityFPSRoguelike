@@ -530,6 +530,10 @@ PrefabInstance:
       propertyPath: InScenePlacedSourceGlobalObjectIdHash
       value: 306342956
       objectReference: {fileID: 0}
+    - target: {fileID: 5228318702294923815, guid: d0bad616f5b2a6246895811be1fd4060, type: 3}
+      propertyPath: upgradePrefab
+      value: 
+      objectReference: {fileID: 3448162153960770167, guid: 72826d5e70d831d48b43f3efb82ae8e7, type: 3}
     - target: {fileID: 7064124297643207712, guid: d0bad616f5b2a6246895811be1fd4060, type: 3}
       propertyPath: m_Name
       value: GameManager

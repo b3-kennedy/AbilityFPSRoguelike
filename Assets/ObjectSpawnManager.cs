@@ -6,6 +6,7 @@ public class ObjectSpawnManager : NetworkBehaviour
 {
     public static ObjectSpawnManager Instance;
     public Dictionary<string, GameObject> effects = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> objects = new Dictionary<string, GameObject>();
 
 
     private void Awake()
@@ -36,6 +37,20 @@ public class ObjectSpawnManager : NetworkBehaviour
                 Debug.LogWarning($"Duplicate character key found: {item.name}");
             }
         }
+
+        GameObject[] loadedObjects = Resources.LoadAll<GameObject>("Objects");
+        foreach (var item in loadedObjects)
+        {
+            if (!objects.ContainsKey(item.name))
+            {
+                objects.Add(item.name, item);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate character key found: {item.name}");
+            }
+        }
+
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -54,6 +69,26 @@ public class ObjectSpawnManager : NetworkBehaviour
             Instantiate(effect, position, Quaternion.identity);
         }
     }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SpawnObjectServerRpc(ulong clientID, Vector3 position, string objectName)
+    {
+        if(objects.TryGetValue(objectName, out var selectedObject))
+        {
+            GameObject obj = Instantiate(selectedObject, position, selectedObject.transform.rotation);
+            obj.GetComponent<NetworkObject>().Spawn();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DestroyObjectServerRpc(ulong objectID)
+    {
+        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var selectedObject))
+        {
+            selectedObject.Despawn();
+        }
+    }
+
 
     // Update is called once per frame
     void Update()

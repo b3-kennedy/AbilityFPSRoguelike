@@ -36,7 +36,7 @@ public class GameManager : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            Instantiate(upgradePrefab);
+            ObjectSpawnManager.Instance.SpawnObjectServerRpc(NetworkManager.Singleton.LocalClientId, Vector3.zero, "UpgradePrefab");
         }
     }
 }
