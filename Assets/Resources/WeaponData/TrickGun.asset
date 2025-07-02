@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TrickGun
   m_EditorClassIdentifier: 
   gunName: Trick
-  fireRate: 0.1
+  fireRate: 0.5
   damage: 50
   magazineSize: 1
   reloadTime: 3

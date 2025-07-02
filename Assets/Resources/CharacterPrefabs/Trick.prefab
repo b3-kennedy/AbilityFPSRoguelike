@@ -1584,13 +1584,13 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerAbilities:
   - hotKey: 113
-    ability: {fileID: 11400000, guid: e590116bf4e56ce4eaa49001af5d402a, type: 2}
-  - hotKey: 101
     ability: {fileID: 11400000, guid: 61942ca24da7e6c4aaa8393b6f27807b, type: 2}
-  - hotKey: 102
+  - hotKey: 101
     ability: {fileID: 11400000, guid: 0e265589c94d6234888055807e20a19a, type: 2}
+  - hotKey: 102
+    ability: {fileID: 11400000, guid: b361885cc2868554b96476d3267ed000, type: 2}
   - hotKey: 99
-    ability: {fileID: 11400000, guid: 2e7a633eaaa805440a4f66a7d25ef6b3, type: 2}
+    ability: {fileID: 11400000, guid: 1e44ad2f823ad034184d42a1de57bc32, type: 2}
   abilityIconParent: {fileID: 3299478274581769484}
   abilityIconPrefab: {fileID: 2595220464093374704, guid: 89f72e156b620c048a545009f59761a2, type: 3}
 --- !u!114 &8406033853965433836

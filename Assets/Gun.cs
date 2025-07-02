@@ -243,6 +243,11 @@ public class Gun : MonoBehaviour
         
     }
 
+    public void SetAmmo(int amount)
+    {
+        ammo = amount;
+    }
+
 
     public bool IsADS()
     {

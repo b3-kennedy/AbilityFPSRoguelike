@@ -1573,7 +1573,7 @@ MonoBehaviour:
   - hotKey: 101
     ability: {fileID: 11400000, guid: c09289b593a882842ac405df121c4bce, type: 2}
   - hotKey: 102
-    ability: {fileID: 11400000, guid: f9638ec4f90c00d4eaa3a4736743db38, type: 2}
+    ability: {fileID: 11400000, guid: 1ab54db045563b8429b23891fbd21df5, type: 2}
   - hotKey: 99
     ability: {fileID: 11400000, guid: 2e7a633eaaa805440a4f66a7d25ef6b3, type: 2}
   abilityIconParent: {fileID: 3299478274581769484}

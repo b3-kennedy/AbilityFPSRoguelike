@@ -112,14 +112,16 @@ public class ProjectileManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void DestroyLocalProjectileFromServerRpc(string projectileID)
+    public void DestroyLocalProjectileFromServerRpc(ulong clientID, string projectileID)
     {
-        DestroyLocalProjectileFromClientRpc(projectileID);
+        DestroyLocalProjectileFromClientRpc(clientID, projectileID);
     }
 
     [ClientRpc]
-    void DestroyLocalProjectileFromClientRpc(string projectileID)
+    void DestroyLocalProjectileFromClientRpc(ulong clientID, string projectileID)
     {
+        if (NetworkManager.Singleton.LocalClientId == clientID) return;
+
         if (spawnedProjectiles.TryGetValue(projectileID, out var projectile))
         {
             Destroy(projectile);

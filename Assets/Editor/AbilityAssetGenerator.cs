@@ -29,7 +29,6 @@ public class AbilityAssetGenerator
             // Check if asset already exists
             if (File.Exists(assetPath))
             {
-                Debug.Log(type.Name + " already exists. Skipping.");
                 continue;
             }
 

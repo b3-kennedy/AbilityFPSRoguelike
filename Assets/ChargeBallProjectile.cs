@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class ChargeBallProjectile : MonoBehaviour
@@ -31,7 +32,7 @@ public class ChargeBallProjectile : MonoBehaviour
     {
         DealDamage();
         Destroy(gameObject);
-        ProjectileManager.Instance.DestroyLocalProjectileFromServerRpc(GetComponent<Projectile>().ID);
+        ProjectileManager.Instance.DestroyLocalProjectileFromServerRpc(NetworkManager.Singleton .LocalClientId,GetComponent<Projectile>().ID);
     }
 
     void DealDamage()

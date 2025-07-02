@@ -22,5 +22,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 247
   radius: 2.5
-  height: 5
+  height: 2.5
   damage: 50

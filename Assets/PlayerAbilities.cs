@@ -136,6 +136,7 @@ public class PlayerAbilities : NetworkBehaviour
                 Destroy(activeAbilityIcons[iconIndex].gameObject);
 
                 Image icon = Instantiate(abilityIconPrefab, abilityIconParent).GetComponent<Image>();
+                icon.transform.SetSiblingIndex(iconIndex);
                 icon.sprite = newAbility.icon;
                 icon.gameObject.GetComponent<AbilityIcon>().SetAbility(newAbility);
                 newAbility.SetIcon(icon);

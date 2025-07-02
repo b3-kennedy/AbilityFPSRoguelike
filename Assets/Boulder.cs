@@ -44,7 +44,7 @@ public class Boulder : MonoBehaviour
                 health.TakeDamageServerRpc(damage);
             }
         }
-        ProjectileManager.Instance.DestroyLocalProjectileFromServerRpc(GetComponent<Projectile>().ID);
+        ProjectileManager.Instance.DestroyLocalProjectileFromServerRpc(NetworkManager.Singleton.LocalClientId,GetComponent<Projectile>().ID);
         Destroy(gameObject);
 
     }
