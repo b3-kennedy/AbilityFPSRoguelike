@@ -4,7 +4,6 @@ using UnityEngine.AI;
 
 public class EnemyMove : NetworkBehaviour
 {
-    public Transform target;
     public float speed = 3f;
     public float stoppingDistance = 0.2f;
     public float waypointTolerance = 0.1f;
@@ -12,6 +11,7 @@ public class EnemyMove : NetworkBehaviour
     private NavMeshPath path;
     private int currentCorner = 0;
     private Rigidbody rb;
+    TargetHolder holder;
 
     void Start()
     {
@@ -22,12 +22,13 @@ public class EnemyMove : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody>();
         path = new NavMeshPath();
+        holder = GetComponent<TargetHolder>();
         
     }
 
     void FixedUpdate()
     {
-        NavMesh.CalculatePath(transform.position, target.position, NavMesh.AllAreas, path);
+        NavMesh.CalculatePath(transform.position, holder.target.position, NavMesh.AllAreas, path);
 
         if (path == null || path.corners.Length == 0 || currentCorner >= path.corners.Length)
             return;

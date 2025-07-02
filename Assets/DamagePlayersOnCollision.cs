@@ -3,6 +3,8 @@ using UnityEngine;
 public class DamagePlayersOnCollision : MonoBehaviour
 {
 
+    public float damage = 5f;
+
     private void Start()
     {
         
@@ -11,7 +13,7 @@ public class DamagePlayersOnCollision : MonoBehaviour
     {
         if (other.transform.GetComponent<PlayerMovement>())
         {
-            other.transform.GetComponent<Health>().TakeDamageServerRpc(5f);
+            other.transform.GetComponent<Health>().TakeDamageServerRpc(damage);
         }
     }
 }

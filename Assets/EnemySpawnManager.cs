@@ -37,7 +37,7 @@ public class EnemySpawnManager : NetworkBehaviour
     void SpawnEnemyServerRpc()
     {
         GameObject spawnedEnemy = Instantiate(enemy);
-        spawnedEnemy.GetComponent<EnemyMove>().target = NetworkManager.Singleton.LocalClient.PlayerObject.transform;
+        spawnedEnemy.GetComponent<TargetHolder>().target = NetworkManager.Singleton.LocalClient.PlayerObject.transform;
         spawnedEnemy.GetComponent<NetworkObject>().Spawn();
     }
 }
