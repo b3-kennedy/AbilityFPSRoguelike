@@ -47,37 +47,43 @@ public class Slide : Ability
 
             gun.SetUseAmmo(false);
 
+            slideTimer += Time.deltaTime;
 
-            if (movement.IsGrounded() && movement.IsOnSlope())
+            if (GetGroundSlope(out Vector3 slopeDir, out float angle))
             {
-                RaycastHit hit;
-
-                float capsuleHeight = 2f;
-                float radius = 0.5f;
-                float castDistance = 0.1f; // How far below the capsule to cast
-
-                Vector3 center = player.transform.position;
-                Vector3 top = center + Vector3.up * ((capsuleHeight / 2f) - radius);
-                Vector3 bottom = center + Vector3.down * ((capsuleHeight / 2f) - radius);
-
-                // Cast down to detect the ground
-                if (Physics.CapsuleCast(top, bottom, radius - 0.01f, Vector3.down, out hit, castDistance + 0.01f, groundLayer))
-                {
-                    Vector3 slopeDirection = Vector3.ProjectOnPlane(Vector3.down, hit.normal).normalized;
-                    rb.AddForce(slopeDirection * 2.5f, ForceMode.Force);
-                }
-
+                float slideStrength = Mathf.Lerp(2f, 10f, angle / 45f);
+                rb.AddForce(slopeDir * slideStrength, ForceMode.Force);
             }
 
-            if (!movement.IsOnSlope() && rb.linearVelocity.magnitude <= 0.1f)
+
+            if (rb.linearVelocity.magnitude <= 0.1f)
             {
                 hasCast = false;
                 movement.canInput = true;
                 movement.enableSpeedControl = true;
                 movement.groundDrag = startDrag;
                 gun.SetUseAmmo(true);
+                slideTimer = 0;
             }
         }
+    }
+
+    private bool GetGroundSlope(out Vector3 slopeDir, out float angle)
+    {
+        slopeDir = Vector3.zero;
+        angle = 0f;
+
+        RaycastHit hit;
+        if (Physics.Raycast(groundCheck.position, Vector3.down, out hit, 1.5f, groundLayer))
+        {
+            angle = Vector3.Angle(hit.normal, Vector3.up);
+            if (angle > 0.1f) // Any slope, even shallow ones
+            {
+                slopeDir = Vector3.ProjectOnPlane(Vector3.down, hit.normal).normalized;
+                return true;
+            }
+        }
+        return false;
     }
 
 

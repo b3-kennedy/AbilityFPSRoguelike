@@ -70,6 +70,8 @@ public class PlayerMovement : NetworkBehaviour
     public int maxNumberOfJumps = 1;
     int numberOfJumps;
 
+    bool isGravBoosted;
+
 
 
     // Start is called before the first frame update
@@ -247,6 +249,12 @@ public class PlayerMovement : NetworkBehaviour
     void OnLand()
     {
         numberOfJumps = maxNumberOfJumps;
+        if (isGravBoosted)
+        {
+            canInput = true;
+            enableSpeedControl = true;
+            rb.linearDamping = groundDrag;
+        }
     }
 
     void StartLandingSlowdown()
@@ -314,6 +322,14 @@ public class PlayerMovement : NetworkBehaviour
 
 
 
+    }
+
+    public void OnGravBoost()
+    {
+        enableSpeedControl = false;
+        canInput = false;
+        isGravBoosted = true;
+        rb.linearDamping = 0;
     }
 
     void JumpOffLadder()

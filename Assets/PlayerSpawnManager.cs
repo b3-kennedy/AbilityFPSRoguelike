@@ -53,7 +53,7 @@ public class PlayerSpawnManager : NetworkBehaviour
     {
         Debug.Log("Create Player");
         string characterName = picks[(int)clientID].characterName;
-        NetworkObject spawnedPlayer = Instantiate(characters[characterName].prefab).GetComponent<NetworkObject>();
+        NetworkObject spawnedPlayer = Instantiate(characters[characterName].prefab, new Vector3(0, 100, 0), characters[characterName].prefab.transform.rotation).GetComponent<NetworkObject>();
         spawnedPlayer.name = spawnedPlayer.name + "_Player"+clientID;
         spawnedPlayer.SpawnAsPlayerObject(clientID, false);
     }

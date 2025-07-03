@@ -5,13 +5,13 @@ public class SlideTeleportActivate : Ability
 {
 
     GameObject marker;
-    GameObject caster;
+    GameObject player;
     PlayerAbilities playerAbilities;
     public override void OnInitialise()
     {
         base.OnInitialise();
-        caster = GetCaster();
-        playerAbilities = caster.GetComponent<PlayerAbilities>();
+        player = GetCaster();
+        playerAbilities = player.GetComponent<PlayerAbilities>();
     }
 
     public void SetMarker(GameObject obj)
@@ -21,8 +21,8 @@ public class SlideTeleportActivate : Ability
 
     public override void PerformCast()
     {
-        Vector3 position = new Vector3(marker.transform.position.x, marker.transform.position.y + caster.transform.localScale.y, marker.transform.position.z);
-        caster.GetComponent<NetworkTransform>().Teleport(position, caster.transform.rotation, caster.transform.localScale);
+        Vector3 position = new Vector3(marker.transform.position.x, marker.transform.position.y + player.transform.localScale.y, marker.transform.position.z);
+        player.GetComponent<NetworkTransform>().Teleport(position, player.transform.rotation, player.transform.localScale);
         Destroy(marker);
         Ability ability = playerAbilities.SwitchAbilities("SlideTeleportActivate", "SlideTeleport");
         ability.StartCooldown();
