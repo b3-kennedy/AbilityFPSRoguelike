@@ -56,7 +56,7 @@ public class Slide : Ability
             }
 
 
-            if (rb.linearVelocity.magnitude <= 0.1f)
+            if (Input.GetKeyUp(GetKey()) || rb.linearVelocity.magnitude <= 0.1f)
             {
                 hasCast = false;
                 movement.canInput = true;
