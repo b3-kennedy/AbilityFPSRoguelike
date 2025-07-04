@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: FireRateEffect
   m_EditorClassIdentifier: 
   count: 0
+  title: Fire Rate Upgrade
   value: 0.9

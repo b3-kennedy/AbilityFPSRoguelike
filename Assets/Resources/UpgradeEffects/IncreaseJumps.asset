@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 293d4fdea7d2c6d4a8016aa1db5dd40b, type: 3}
   m_Name: IncreaseJumps
   m_EditorClassIdentifier: 
-  count: 0
+  count: 2
+  title: Increase Jump Count

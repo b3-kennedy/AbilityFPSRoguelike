@@ -51,14 +51,9 @@ public class GameManager : NetworkBehaviour
         {
             PlayerSpawnManager.Instance.CreatePlayerServerRpc(NetworkManager.Singleton.LocalClientId);
         }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            OpenChest();
-        }
     }
 
-    public void OpenChest()
+    public void OpenChest(Vector3 position)
     {
         int roll = Random.Range(1, 101); // 1–100 inclusive
 
@@ -85,7 +80,8 @@ public class GameManager : NetworkBehaviour
         if (matchingUpgrades.Length > 0)
         {
             Upgrade selectedUpgrade = matchingUpgrades[Random.Range(0, matchingUpgrades.Length)];
-            ObjectSpawnManager.Instance.SpawnUpgradeServerRpc(NetworkManager.Singleton.LocalClientId, Vector3.zero, "UpgradePrefab", selectedUpgrade.name);
+            
+            ObjectSpawnManager.Instance.SpawnUpgradeServerRpc(NetworkManager.Singleton.LocalClientId, position, "UpgradePrefab", selectedUpgrade.name);
 
             // TODO: Assign selectedUpgrade to spawned object if needed
         }

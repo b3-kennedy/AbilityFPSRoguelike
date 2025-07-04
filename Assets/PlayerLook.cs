@@ -36,8 +36,8 @@ public class PlayerLook : NetworkBehaviour
     {
         if(!IsOwner) return;
 
-        float mouseX = Input.GetAxisRaw("Mouse X") * sensitivity;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * sensitivity;
+        float mouseX = (Input.GetAxis("Mouse X") + Input.GetAxis("RightJoystickHorizontal")) * sensitivity;
+        float mouseY = (Input.GetAxis("Mouse Y") + (Input.GetAxis("RightJoystickVertical")* -1)) * sensitivity;
 
         yRot += mouseX;
         xRot -= mouseY;

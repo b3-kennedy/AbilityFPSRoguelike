@@ -23,6 +23,8 @@ public class RotateToPlayer : MonoBehaviour
 
         }
 
-        transform.LookAt(localPlayer.position);
+        Vector3 direction = localPlayer.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = lookRotation * Quaternion.Euler(0f, 180f, 0f);
     }
 }

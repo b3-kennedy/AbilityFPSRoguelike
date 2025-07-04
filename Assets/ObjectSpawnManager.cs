@@ -76,8 +76,11 @@ public class ObjectSpawnManager : NetworkBehaviour
         if(objects.TryGetValue(objectName, out var selectedObject))
         {
             GameObject obj = Instantiate(selectedObject, position, selectedObject.transform.rotation);
-            obj.GetComponent<UpgradeHolder>().effect = GameManager.Instance.upgrades[upgradeName].effect;
+            UpgradeEffect effect = obj.GetComponent<UpgradeHolder>().effect;
+            effect = GameManager.Instance.upgrades[upgradeName].effect;
             obj.GetComponent<NetworkObject>().Spawn();
+            effect.SetUpgradeObject(obj);
+            effect.OnSpawned();
         }
     }
 

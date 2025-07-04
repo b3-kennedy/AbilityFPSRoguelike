@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: IncreaseCritChance
   m_EditorClassIdentifier: 
   count: 0
+  title: Increase Crit Chance
+  critChanceIncrease: 10

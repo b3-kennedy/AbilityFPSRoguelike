@@ -13,6 +13,13 @@ public class FireRateEffect : UpgradeEffect
 
     }
 
+    public override void OnSpawned()
+    {
+        base.OnSpawned();
+        SetToolTipDescription($"Increase fire rate by {100 * value} %");
+        
+    }
+
     public override void Remove()
     {
         Gun gun = GetGun();

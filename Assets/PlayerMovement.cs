@@ -140,7 +140,7 @@ public class PlayerMovement : NetworkBehaviour
             {
                 isSprinting = true;
                 state = PlayerState.SPRINT;
-                targetSpeed = sprintSpeed;
+                speed = sprintSpeed;
             }
             else if (!isMovingForward && IsGrounded())
             {
@@ -151,14 +151,14 @@ public class PlayerMovement : NetworkBehaviour
             }
 
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && IsGrounded())
+        else if (Input.GetKeyUp(playerData.sprintKey) && IsGrounded())
         {
             isSprinting = false;
             state = PlayerState.NORMAL;
             speed = normalSpeed;
             targetSpeed = normalSpeed;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && !IsGrounded())
+        else if (Input.GetKeyUp(playerData.sprintKey) && !IsGrounded())
         {
             normalOnLand = true;
         }
@@ -200,11 +200,6 @@ public class PlayerMovement : NetworkBehaviour
         if (!grounded)
         {
             wasAirborne = true;
-        }
-
-        if (isSprinting)
-        {
-            speed = Mathf.MoveTowards(speed, sprintSpeed, Time.deltaTime * sprintMultiplier);
         }
 
         // Gradually recover speed after landing

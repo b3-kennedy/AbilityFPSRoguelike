@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5678784036872687617}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ForwardDir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,8 @@ GameObject:
   - component: {fileID: 1532888762167474227}
   - component: {fileID: 8239829438140448070}
   - component: {fileID: 1478516533943596023}
-  m_Layer: 6
+  - component: {fileID: -864439473876448682}
+  m_Layer: 8
   m_Name: GravBoost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -865,6 +866,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!208 &-864439473876448682
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3738834168630767563}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &8994764594373902511
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +893,7 @@ GameObject:
   - component: {fileID: 3794473969067180241}
   - component: {fileID: 7607482726201917214}
   - component: {fileID: 5447599418496361124}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GravBoostTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

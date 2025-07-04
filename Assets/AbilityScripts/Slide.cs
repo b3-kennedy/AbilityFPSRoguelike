@@ -31,6 +31,7 @@ public class Slide : Ability
         hasCast = true;
         movement.canInput = false;
         movement.enableSpeedControl = false;
+        movement.state = PlayerMovement.PlayerState.NORMAL;
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 launchVector = new Vector3(horizontal, 0, vertical);
@@ -62,6 +63,9 @@ public class Slide : Ability
                 movement.canInput = true;
                 movement.enableSpeedControl = true;
                 movement.groundDrag = startDrag;
+                movement.state = PlayerMovement.PlayerState.NORMAL;
+                movement.targetSpeed = movement.normalSpeed;
+                movement.speed = 5f;
                 gun.SetUseAmmo(true);
                 slideTimer = 0;
             }

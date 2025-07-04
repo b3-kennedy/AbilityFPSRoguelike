@@ -8,6 +8,12 @@ public class IncreaseJumps : UpgradeEffect
         movement.IncreaseNumberOfJumps();
     }
 
+    public override void OnSpawned()
+    {
+        base.OnSpawned();
+        SetToolTipDescription($"Increase jump count by {1}");
+    }
+
     public override void Remove()
     {
         PlayerMovement movement = GetPlayer().GetComponent<PlayerMovement>();
