@@ -27,6 +27,8 @@ public class ShotgunSingleFireGun : Gun
             GetPlayerInterfaceManager().UpdateAmmoText(ammo);
             shot.Invoke();
             shootTimer -= fireRate;
+            float critDamageMultiplier = GetCritDamageMultiplier();
+            float critChance = GetCritChance();
             for (int i = 0; i < pelletCount; i++)
             {
                 Vector3 direction = GetSpreadDirection(GetCamera().transform.forward, spreadAngle);
@@ -46,7 +48,7 @@ public class ShotgunSingleFireGun : Gun
 
                     if (health && data.GetTeam() == UnitData.Team.BAD)
                     {
-                        health.TakeDamageServerRpc(gunData.damage);
+                        health.TakeDamageServerRpc(gunData.damage, GetCritChance(), GetCritDamageMultiplier());
                     }
                 }
             }

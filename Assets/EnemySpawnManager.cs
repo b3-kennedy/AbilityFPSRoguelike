@@ -46,7 +46,7 @@ public class EnemySpawnManager : NetworkBehaviour
         if (!IsServer) return;
 
 
-        if (canSpawn && enemyCount < 10)
+        if (canSpawn && enemyCount < 100)
         {
             spawnTimer += Time.deltaTime;
             if (spawnTimer >= spawnInterval)
@@ -70,7 +70,7 @@ public class EnemySpawnManager : NetworkBehaviour
 
         if (randomPos != Vector3.zero)
         {
-            SpawnEnemyServerRpc(randomPos);
+            SpawnEnemyServerRpc(randomPos, randomNum);
         }
     }
 
@@ -93,10 +93,10 @@ public class EnemySpawnManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    void SpawnEnemyServerRpc(Vector3 position)
+    void SpawnEnemyServerRpc(Vector3 position, ulong playerIndex)
     {
         GameObject spawnedEnemy = Instantiate(enemy, position, enemy.transform.rotation);
-        spawnedEnemy.GetComponent<TargetHolder>().target = NetworkManager.Singleton.LocalClient.PlayerObject.transform;
+        spawnedEnemy.GetComponent<TargetHolder>().target = NetworkManager.Singleton.ConnectedClients[playerIndex].PlayerObject.transform;
         spawnedEnemy.GetComponent<NetworkObject>().Spawn();
         enemyCount++;
     }

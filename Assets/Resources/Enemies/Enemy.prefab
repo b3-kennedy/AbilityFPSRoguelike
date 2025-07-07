@@ -250,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weightClass: 0
   team: 1
+  bounty: 10
 --- !u!114 &-1055777362777091663
 MonoBehaviour:
   m_ObjectHideFlags: 0

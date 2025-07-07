@@ -158,11 +158,14 @@ public class ProjectileManager : NetworkBehaviour
         {
             Rigidbody rb = obj.GetComponent<Rigidbody>();
             EnemyMove enemyMove = obj.GetComponent<EnemyMove>();
-            if (rb && enemyMove)
+            if (rb)
             {
                 if(Vector3.Distance(obj.transform.position, destination) >= 0.5f)
                 {
-                    enemyMove.OnApplyForce(Vector3.zero, 0, ForceMode.Impulse);
+                    if (enemyMove)
+                    {
+                        enemyMove.OnApplyForce(Vector3.zero, 0, ForceMode.Impulse);
+                    }
                     rb.linearVelocity = dir * force;
                 }
                 else

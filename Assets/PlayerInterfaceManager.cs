@@ -11,6 +11,7 @@ public class PlayerInterfaceManager : NetworkBehaviour
     public TextMeshProUGUI gunNameText;
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI magText;
+    public TextMeshProUGUI moneyText;
 
     
 

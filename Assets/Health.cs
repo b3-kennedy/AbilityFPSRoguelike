@@ -43,6 +43,11 @@ public class Health : NetworkBehaviour
         if(health <= 0)
         {
             Destroy(gameObject);
+            UnitData data = GetComponent<UnitData>();
+            if(IsServer && data.GetTeam() == UnitData.Team.BAD)
+            {
+                GameManager.Instance.AddMoneyServerRpc(data.bounty);
+            }
         }
 
         UpdateHealthValue();

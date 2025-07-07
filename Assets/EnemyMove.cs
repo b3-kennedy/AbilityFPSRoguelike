@@ -28,6 +28,7 @@ public class EnemyMove : NetworkBehaviour
 
     void Update()
     {
+        
 
         if (hasAppliedForce)
         {
@@ -38,6 +39,8 @@ public class EnemyMove : NetworkBehaviour
                 timer = 0;
             }
         }
+
+        if (!IsServer) return;
 
         if (agent.enabled)
         {

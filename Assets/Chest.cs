@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Chest : Interactable
@@ -16,8 +17,19 @@ public class Chest : Interactable
 
     public override void Interact()
     {
-        GameManager.Instance.OpenChest(transform.position);
-        Destroy(gameObject);
+        if(GameManager.Instance.money >= cost)
+        {
+            GameManager.Instance.OpenChest(transform.position);
+            GameManager.Instance.money -= cost;
+            NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerInterfaceManager>().moneyText.text = "$"+GameManager.Instance.money;
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("Not enough money");
+        }
+        
+        
     }
 
     public override void OnUnHover()

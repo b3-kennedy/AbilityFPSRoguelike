@@ -15,6 +15,8 @@ public class GameManager : NetworkBehaviour
     public int rareChance = 35;
     public int legendaryChance = 5;
 
+    public float money;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -51,6 +53,19 @@ public class GameManager : NetworkBehaviour
         {
             PlayerSpawnManager.Instance.CreatePlayerServerRpc(NetworkManager.Singleton.LocalClientId);
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void AddMoneyServerRpc(float value)
+    {
+        AddMoneyClientRpc(value);
+    }
+
+    [ClientRpc]
+    void AddMoneyClientRpc(float value)
+    {
+        money += value;
+        NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerInterfaceManager>().moneyText.text = "$" + money;
     }
 
     public void OpenChest(Vector3 position)

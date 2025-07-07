@@ -8,6 +8,8 @@ public class UnitData : MonoBehaviour
     public enum Team {GOOD, BAD, ABILITY};
     [SerializeField] Team team;
 
+    public float bounty;
+
     public Team GetTeam() 
     {  
         return team; 
