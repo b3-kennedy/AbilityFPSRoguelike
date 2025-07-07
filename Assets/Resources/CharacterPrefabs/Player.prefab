@@ -1615,7 +1615,7 @@ MonoBehaviour:
   enableSpeedControl: 1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 64
   maxNumberOfJumps: 1
 --- !u!114 &2346969234001322514
 MonoBehaviour:
@@ -1756,7 +1756,7 @@ MonoBehaviour:
   gunNameText: {fileID: 2265144934904145744}
   ammoText: {fileID: 6849284763405538758}
   magText: {fileID: 2980037825490487622}
-  playerInterface: {fileID: 0}
+  playerInterface: {fileID: 2774669576626743209}
 --- !u!114 &6736191666573353726
 MonoBehaviour:
   m_ObjectHideFlags: 0

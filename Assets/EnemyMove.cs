@@ -1,17 +1,16 @@
 using Unity.Netcode;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyMove : NetworkBehaviour
 {
-    public float speed = 3f;
-    public float stoppingDistance = 0.2f;
-    public float waypointTolerance = 0.1f;
-
     private NavMeshPath path;
-    private int currentCorner = 0;
-    private Rigidbody rb;
     TargetHolder holder;
+    NavMeshAgent agent;
+    Rigidbody rb;
+    bool hasAppliedForce;
+    float timer;
 
     void Start()
     {
@@ -23,27 +22,58 @@ public class EnemyMove : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
         path = new NavMeshPath();
         holder = GetComponent<TargetHolder>();
-        
+        agent = GetComponent<NavMeshAgent>();
+
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        NavMesh.CalculatePath(transform.position, holder.target.position, NavMesh.AllAreas, path);
 
-        if (path == null || path.corners.Length == 0 || currentCorner >= path.corners.Length)
-            return;
-
-        Vector3 direction = (path.corners[currentCorner] - transform.position);
-        direction.y = 0; // Optional: ignore height if on flat ground
-
-        if (direction.magnitude < waypointTolerance)
+        if (hasAppliedForce)
         {
-            currentCorner++;
-            return;
+            timer += Time.deltaTime;
+            if(timer >= 0.5f && rb.linearVelocity.magnitude <= 0.2f)
+            {
+                StopForce();
+                timer = 0;
+            }
         }
 
-        Vector3 velocity = direction.normalized * speed;
-        rb.MovePosition(rb.position + velocity * Time.fixedDeltaTime);
+        if (agent.enabled)
+        {
+            NavMesh.CalculatePath(transform.position, holder.target.position, NavMesh.AllAreas, path);
+            agent.SetPath(path);
+        }
+
+        //rb.linearVelocity = agent.velocity;
+    }
+
+    public void OnApplyForce(Vector3 dir, float force, ForceMode forceMode)
+    {
+        agent.enabled = false;
+        rb.isKinematic = false;
+        rb.AddForce(dir * force, forceMode);
+        hasAppliedForce = true;
+        Debug.Log("apply force");
+       
+    }
+
+    public void DisableAgent()
+    {
+        agent.enabled = false;
+    }
+
+    public void EnableAgent()
+    {
+        agent.enabled = true;
+    }
+
+    void StopForce()
+    {
+        Debug.Log("stop");
+        agent.enabled = true;
+        rb.isKinematic = true;
+        hasAppliedForce = false;
     }
 }
 

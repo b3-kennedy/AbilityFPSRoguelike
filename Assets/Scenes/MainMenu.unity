@@ -256,6 +256,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &655410929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655410923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0452523017292745b5255418fbac632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  enemy: {fileID: 4066426994913120135, guid: 7140c620cb0a02e4bb68a69b15a449fc, type: 3}
+  baseSpawnInterval: 2
+  maxSpawnDistance: 50
+  minSpawnDistance: 40
+  canSpawn: 0
 --- !u!1 &1070227142
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,6 +604,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7064124297643207712, guid: d0bad616f5b2a6246895811be1fd4060, type: 3}
       insertIndex: -1
       addedObject: {fileID: 655410928}
+    - targetCorrespondingSourceObject: {fileID: 7064124297643207712, guid: d0bad616f5b2a6246895811be1fd4060, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 655410929}
   m_SourcePrefab: {fileID: 100100000, guid: d0bad616f5b2a6246895811be1fd4060, type: 3}
 --- !u!1 &1683823434
 GameObject:

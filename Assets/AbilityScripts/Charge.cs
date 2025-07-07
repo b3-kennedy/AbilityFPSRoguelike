@@ -55,7 +55,16 @@ public class Charge : Ability
                 if (colliderRb)
                 {
                     Vector3 direction = (GetCaster().transform.position - colliders[i].transform.position).normalized;
-                    colliderRb.AddForce(-direction * pushForce, ForceMode.Impulse);
+                    EnemyMove eMove = colliders[i].GetComponent<EnemyMove>();
+                    if (eMove)
+                    {
+                        eMove.OnApplyForce(-direction, pushForce, ForceMode.Impulse);
+                    }
+                    else 
+                    {
+                        colliderRb.AddForce(-direction * pushForce, ForceMode.Impulse);
+                    }
+                    
                 }
                 
 

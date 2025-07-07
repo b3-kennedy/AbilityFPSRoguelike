@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -22,9 +23,19 @@ public class VacuumProjectile : MonoBehaviour
         {
             Rigidbody rb = colliders[i].attachedRigidbody;
             Vector3 dir = (colliders[i].transform.position - transform.position).normalized;
+
             if (rb)
             {
-                rb.AddForce(dir * explosionForce * altValue, ForceMode.Impulse);
+                EnemyMove eMove = colliders[i].GetComponent<EnemyMove>();
+                if (eMove)
+                {
+                    eMove.OnApplyForce(dir, explosionForce * altValue, ForceMode.Impulse);
+                }
+                else
+                {
+                    rb.AddForce(dir * explosionForce * altValue, ForceMode.Impulse);
+                }
+                
             }
         }
         ProjectileManager.Instance.CreateExplosionServerRpc(NetworkManager.Singleton.LocalClientId, transform.position, explosionRadius, explosionForce * altValue);

@@ -26,7 +26,7 @@ public abstract class UpgradeEffect : ScriptableObject
 
     public GameObject GetPlayer()
     {
-        return player;
+        return NetworkManager.Singleton.LocalClient.PlayerObject.gameObject;
     }
 
     public virtual void OnSpawned()

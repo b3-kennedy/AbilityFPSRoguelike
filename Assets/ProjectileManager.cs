@@ -157,10 +157,12 @@ public class ProjectileManager : NetworkBehaviour
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var obj))
         {
             Rigidbody rb = obj.GetComponent<Rigidbody>();
-            if (rb)
+            EnemyMove enemyMove = obj.GetComponent<EnemyMove>();
+            if (rb && enemyMove)
             {
                 if(Vector3.Distance(obj.transform.position, destination) >= 0.5f)
                 {
+                    enemyMove.OnApplyForce(Vector3.zero, 0, ForceMode.Impulse);
                     rb.linearVelocity = dir * force;
                 }
                 else
@@ -212,7 +214,8 @@ public class ProjectileManager : NetworkBehaviour
     {
         if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var enemy))
         {
-            enemy.GetComponent<Rigidbody>().AddForce(direction * force, mode);
+            EnemyMove enemyMove = enemy.gameObject.GetComponent<EnemyMove>();
+            enemyMove.OnApplyForce(direction, force, mode);
         }
     }
 

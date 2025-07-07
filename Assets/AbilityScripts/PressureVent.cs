@@ -35,7 +35,16 @@ public class PressureVent : Ability
             if (hit.collider && hitRb)
             {
                 Vector3 direction = (cam.transform.position - hit.point).normalized;
-                hitRb.AddForce(-direction * baseForce * combo, ForceMode.Impulse);
+                EnemyMove eMove = hit.collider.gameObject.GetComponent<EnemyMove>();
+                if (eMove)
+                {
+                    eMove.OnApplyForce(-direction, baseForce * combo, ForceMode.Impulse);
+                }
+                else
+                {
+                    hitRb.AddForce(-direction * baseForce * combo, ForceMode.Impulse);
+                }
+                
                 Vector3 playerDirection = (GetCaster().transform.position - hit.point).normalized;
                 rb.AddForce(playerDirection * baseForce * combo, ForceMode.Impulse);
             }

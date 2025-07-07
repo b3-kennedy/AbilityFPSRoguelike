@@ -249,6 +249,7 @@ public class PlayerMovement : NetworkBehaviour
             canInput = true;
             enableSpeedControl = true;
             rb.linearDamping = groundDrag;
+            Debug.Log("landed");
         }
     }
 
@@ -325,6 +326,7 @@ public class PlayerMovement : NetworkBehaviour
         canInput = false;
         isGravBoosted = true;
         rb.linearDamping = 0;
+        Debug.Log("hello");
     }
 
     void JumpOffLadder()
