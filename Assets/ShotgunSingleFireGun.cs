@@ -43,7 +43,7 @@ public class ShotgunSingleFireGun : Gun
                     if (rb && no)
                     {
                         Vector3 dir = (GetCamera().transform.position - rb.position).normalized;
-                        ProjectileManager.Instance.AddForceToEnemyServerRpc(hit.collider.GetComponent<NetworkObject>().NetworkObjectId, -dir, 2f, ForceMode.Impulse);
+                        ProjectileManager.Instance.AddForceToEnemyServerRpc(playerInterfaceManager.GetComponent<NetworkObject>().NetworkObjectId,hit.collider.GetComponent<NetworkObject>().NetworkObjectId, 2f, ForceMode.Impulse);
                     }
 
                     if (health && data.GetTeam() == UnitData.Team.BAD)

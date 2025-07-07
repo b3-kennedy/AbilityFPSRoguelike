@@ -87,6 +87,8 @@ public class PlayerAbilities : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if (!IsOwner) return;
+
         foreach (var ah in playerAbilities)
         {
             ah.ability.FixedUpdateAbility();

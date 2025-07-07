@@ -1,10 +1,12 @@
 using System.Collections.Generic;
+using Newtonsoft.Json.Serialization;
 using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
 public class ProjectileManager : NetworkBehaviour
 {
@@ -101,6 +103,7 @@ public class ProjectileManager : NetworkBehaviour
             GameObject spawnedProjectile = Instantiate(projectile, position, Quaternion.identity);
             spawnedProjectile.GetComponent<Projectile>().SetValues(force, direction, projectileID);
             spawnedProjectile.GetComponent<Projectile>().ID = projectileID;
+            spawnedProjectile.GetComponent<Projectile>().isServerSpawned = true;
             spawnedProjectile.name = projectileName + "Server";
             spawnedProjectiles[projectileID] = spawnedProjectile;
 
@@ -152,27 +155,36 @@ public class ProjectileManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void MoveObjectOnServerRpc(ulong objectID, Vector3 dir, float force, Vector3 destination)
+    public void MoveObjectOnServerRpc(ulong casterID, ulong targetID, float force, Vector3 destination)
     {
-        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var obj))
+        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(casterID, out var caster))
         {
-            Rigidbody rb = obj.GetComponent<Rigidbody>();
-            EnemyMove enemyMove = obj.GetComponent<EnemyMove>();
-            if (rb)
+            if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(targetID, out var target))
             {
-                if(Vector3.Distance(obj.transform.position, destination) >= 0.5f)
+                Rigidbody rb = target.GetComponent<Rigidbody>();
+                EnemyMove enemyMove = target.GetComponent<EnemyMove>();
+                Vector3 dir = (target.transform.position - destination).normalized;
+                if (rb)
                 {
-                    if (enemyMove)
+                    if (Vector3.Distance(target.transform.position, destination) >= 2f)
                     {
-                        enemyMove.OnApplyForce(Vector3.zero, 0, ForceMode.Impulse);
+                        if (enemyMove)
+                        {
+                            enemyMove.OnApplyForce(Vector3.zero, 0, ForceMode.Impulse);
+                            rb.linearVelocity = -dir * force;
+                        }
+                        else
+                        {
+                            rb.linearVelocity = -dir * force;
+                        }
+
                     }
-                    rb.linearVelocity = dir * force;
+                    else
+                    {
+                        rb.linearVelocity = Vector3.zero;
+                    }
+
                 }
-                else
-                {
-                    rb.linearVelocity = Vector3.zero;
-                }
-                
             }
         }
     }
@@ -213,13 +225,17 @@ public class ProjectileManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void AddForceToEnemyServerRpc(ulong objectID, Vector3 direction,float force ,ForceMode mode)
+    public void AddForceToEnemyServerRpc(ulong casterID,ulong targetID,float force ,ForceMode mode)
     {
-        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectID, out var enemy))
-        {
-            EnemyMove enemyMove = enemy.gameObject.GetComponent<EnemyMove>();
-            enemyMove.OnApplyForce(direction, force, mode);
-        }
+        if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(casterID, out var casterObj)) return;
+        if (!NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(targetID, out var targetObj)) return;
+
+        var enemyMove = targetObj.GetComponent<EnemyMove>();
+        if (enemyMove == null) return;
+
+        Vector3 direction = (targetObj.transform.position - casterObj.transform.position).normalized;
+
+        enemyMove.OnApplyForce(direction, force, mode);
     }
 
     [ServerRpc(RequireOwnership = false)]

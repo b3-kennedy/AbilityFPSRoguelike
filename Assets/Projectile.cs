@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
     float force;
     Vector3 direction;
     public string ID;
+    public bool isServerSpawned = false;
     
     public void SetValues(float f, Vector3 dir, string id)
     {

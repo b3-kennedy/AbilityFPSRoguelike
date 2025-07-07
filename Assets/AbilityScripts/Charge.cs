@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class Charge : Ability
@@ -17,6 +19,7 @@ public class Charge : Ability
     PlayerLook look;
     Collider[] colliders = new Collider[20];
     public float pushForce = 5f;
+    PlayerData playerData;
     public override void OnInitialise()
     {
         base.OnInitialise();
@@ -28,6 +31,7 @@ public class Charge : Ability
         movement.canInput = true;
         rb = GetCaster().GetComponent<Rigidbody>();
         look = GetCaster().GetComponent<PlayerLook>();
+        playerData = GetCaster().GetComponent<PlayerData>();
 
     }
 
@@ -48,26 +52,41 @@ public class Charge : Ability
     {
         if (isActive)
         {
-            int count = Physics.OverlapSphereNonAlloc(GetCaster().transform.position, 1.5f, colliders);
+            int count = Physics.OverlapSphereNonAlloc(GetCaster().transform.position, 4f, colliders);
+            HashSet<ulong> processed = new HashSet<ulong>();
+
             for (int i = 0; i < count; i++)
             {
+                NetworkObject netObj = colliders[i].GetComponent<NetworkObject>();
+                if (netObj == null) continue;
+
+                ulong netId = netObj.NetworkObjectId;
+
+                if (processed.Contains(netId))
+                    continue;
+
+                processed.Add(netId);
+
                 Rigidbody colliderRb = colliders[i].GetComponent<Rigidbody>();
                 if (colliderRb)
                 {
                     Vector3 direction = (GetCaster().transform.position - colliders[i].transform.position).normalized;
                     EnemyMove eMove = colliders[i].GetComponent<EnemyMove>();
+
                     if (eMove)
                     {
-                        eMove.OnApplyForce(-direction, pushForce, ForceMode.Impulse);
+                        ProjectileManager.Instance.AddForceToEnemyServerRpc(
+                            GetCaster().GetComponent<NetworkObject>().NetworkObjectId,
+                            netId,
+                            pushForce,
+                            ForceMode.Impulse
+                        );
                     }
-                    else 
+                    else
                     {
                         colliderRb.AddForce(-direction * pushForce, ForceMode.Impulse);
                     }
-                    
                 }
-                
-
             }
             Vector3 currentVelocity = rb.linearVelocity;
             Vector3 chargeVelocity = movement.orientation.forward * chargeSpeed;
@@ -84,6 +103,7 @@ public class Charge : Ability
                 look.sensitivity = baseSens;
                 isActive = false;
                 movement.canInput = true;
+                processed.Clear();
             }
         }
     }

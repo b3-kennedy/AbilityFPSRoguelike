@@ -21,21 +21,26 @@ public class HookProjectile : NetworkBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        UnitData data = other.collider.gameObject.GetComponent<UnitData>();
-        if(data && data.GetWeightClass() == UnitData.WeightClass.LIGHT)
+
+        if (!GetComponent<Projectile>().isServerSpawned) 
         {
-            
-            hookedRb = other.collider.GetComponent<Rigidbody>();
+            UnitData data = other.collider.gameObject.GetComponent<UnitData>();
+            if (data && data.GetWeightClass() == UnitData.WeightClass.LIGHT)
+            {
+
+                hookedRb = other.collider.GetComponent<Rigidbody>();
+            }
+            else
+            {
+                hookedRb = player.GetComponent<Rigidbody>();
+                GameObject point = new GameObject();
+                point.transform.position = transform.position;
+                hookPoint = point.transform;
+                Debug.Log("PLAYER TO OBJECT");
+            }
+            hooked = true;
         }
-        else
-        {
-            hookedRb = player.GetComponent<Rigidbody>();
-            GameObject point = new GameObject();
-            point.transform.position = transform.position;
-            hookPoint = point.transform;
-            Debug.Log("PLAYER TO OBJECT");
-        }
-        hooked = true;
+
         GetComponent<Collider>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;
     }
@@ -57,7 +62,7 @@ public class HookProjectile : NetworkBehaviour
         if (hooked)
         {
             
-            if(Vector3.Distance(hookedRb.transform.position, hookPoint.position) >= 0.5f)
+            if(Vector3.Distance(hookedRb.transform.position, hookPoint.position) >= 2f)
             {
                 hookTimer += Time.deltaTime;
                 if(hookTimer >= 0.2f && hookedRb.linearVelocity.magnitude < 1f)
@@ -65,7 +70,11 @@ public class HookProjectile : NetworkBehaviour
                     StopHook();
                 }
                 Vector3 dir = (hookPoint.position - hookedRb.transform.position).normalized;
-                ProjectileManager.Instance.MoveObjectOnServerRpc(hookedRb.gameObject.GetComponent<NetworkObject>().NetworkObjectId, dir, 25f, hookPoint.position);
+                if (!GetComponent<Projectile>().isServerSpawned)
+                {
+                    ProjectileManager.Instance.MoveObjectOnServerRpc(player.GetComponent<NetworkObject>().NetworkObjectId, hookedRb.gameObject.GetComponent<NetworkObject>().NetworkObjectId, 35f, hookPoint.position);
+                }
+                
             }
             else
             {
