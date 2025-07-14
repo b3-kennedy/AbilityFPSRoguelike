@@ -1901,6 +1901,7 @@ GameObject:
   - component: {fileID: 3229848299164214254}
   - component: {fileID: -880301725286793288}
   - component: {fileID: -5078435407676245148}
+  - component: {fileID: 4628506052110523274}
   m_Layer: 7
   m_Name: Hook
   m_TagString: Untagged
@@ -2256,6 +2257,18 @@ MonoBehaviour:
   cam: {fileID: 7607185232871171783}
   interactRange: 2.5
   interactMessage: {fileID: 6015414538971555650}
+--- !u!114 &4628506052110523274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7397207673657100299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fb0503b589d8c43bb0668e1d00643f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7607185232871171783
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,4 +20,4 @@ MonoBehaviour:
   fireRateMultiplier: 4
   chargeSpeed: 15
   sensitivityMultiplier: 4
-  pushForce: 5
+  pushForce: 2

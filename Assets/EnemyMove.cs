@@ -71,7 +71,7 @@ public class EnemyMove : NetworkBehaviour
         agent.enabled = true;
     }
 
-    void StopForce()
+    public void StopForce()
     {
         Debug.Log("stop");
         agent.enabled = true;

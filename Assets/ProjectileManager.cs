@@ -182,6 +182,10 @@ public class ProjectileManager : NetworkBehaviour
                     else
                     {
                         rb.linearVelocity = Vector3.zero;
+                        if (enemyMove)
+                        {
+                            enemyMove.StopForce();
+                        }
                     }
 
                 }
