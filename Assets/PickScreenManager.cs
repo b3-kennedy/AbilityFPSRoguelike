@@ -59,9 +59,6 @@ public class PickScreenManager : NetworkBehaviour
         {
             // Destroy the existing indicator
             Destroy(PlayerSpawnManager.Instance.picks[pickIndex].indicator);
-
-            // Remove the entry from the list
-            PlayerSpawnManager.Instance.picks.RemoveAt(pickIndex);
         }
         GameObject indicator = Instantiate(selectionIcons[clientID]);
         Transform selectedItem = panel.GetChild(childIndex);
@@ -71,7 +68,7 @@ public class PickScreenManager : NetworkBehaviour
         pick.clientID = (int)clientID;
         Transform indicatorParent = selectedItem.Find("SelectedLayout");
         indicator.transform.SetParent(indicatorParent, false);
-        PlayerSpawnManager.Instance.picks.Add(pick);
+        PlayerSpawnManager.Instance.picks[(int)clientID] = pick;
         
     }
 
