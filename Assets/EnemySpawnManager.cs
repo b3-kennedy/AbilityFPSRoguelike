@@ -1,8 +1,24 @@
-using System.ComponentModel.Design;
-using System.Threading;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
+
+[System.Serializable]
+public class EnemySpawnChance
+{
+    public GameObject enemy;
+    public float chance;
+    public int maxInGame;
+}
+
+[System.Serializable]
+public class EnemySpawn
+{
+    public List<EnemySpawnChance> enemies;
+}
+
 
 public class EnemySpawnManager : NetworkBehaviour
 {
@@ -15,9 +31,19 @@ public class EnemySpawnManager : NetworkBehaviour
     public float minSpawnDistance;
     float spawnInterval;
     float spawnTimer;
+    public int difficultyLevel;
 
     public bool canSpawn = false;
     int enemyCount = 0;
+    float gameTimer;
+    public float difficultyIncreaseInterval;
+    int lastLoggedTime;
+
+    public List<EnemySpawn> enemySpawnChances;
+
+    public Dictionary<GameObject, int> spawnedEnemyCounts = new Dictionary<GameObject, int>();
+
+
 
 
     private void Awake()
@@ -37,6 +63,19 @@ public class EnemySpawnManager : NetworkBehaviour
     {
 
         spawnInterval = baseSpawnInterval;
+        GameObject[] enemies = Resources.LoadAll<GameObject>("Enemies");
+        Debug.Log(enemies.Length);
+        foreach (GameObject enemy in enemies)
+        {
+            if (!spawnedEnemyCounts.ContainsKey(enemy))
+            {
+                spawnedEnemyCounts.Add(enemy, 0);
+            }
+            else
+            {
+                Debug.LogWarning($"Duplicate character key found: {enemy.name}");
+            }
+        }
     }
 
     // Update is called once per frame
@@ -48,6 +87,7 @@ public class EnemySpawnManager : NetworkBehaviour
 
         if (canSpawn && enemyCount < 100)
         {
+            gameTimer += Time.deltaTime;
             spawnTimer += Time.deltaTime;
             if (spawnTimer >= spawnInterval)
             {
@@ -55,7 +95,19 @@ public class EnemySpawnManager : NetworkBehaviour
                 SpawnEnemyNearPlayer();
                 spawnTimer = 0;
             }
+
+
+
+            int currentTime = Mathf.FloorToInt(gameTimer / difficultyIncreaseInterval);
+            if (currentTime > lastLoggedTime)
+            {
+                lastLoggedTime = currentTime;
+                Debug.Log("Increase difficulty");
+                difficultyLevel++;
+            }
         }
+
+
 
     }
 
@@ -99,11 +151,60 @@ public class EnemySpawnManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
+    public void EnemyKilledServerRpc(ulong networkID)
+    {
+        if(NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(networkID, out var enemy))
+        {
+            TargetHolder holder = enemy.GetComponent<TargetHolder>();
+            if(spawnedEnemyCounts.TryGetValue(holder.enemyPrefab, out var value))
+            {
+                spawnedEnemyCounts[holder.enemyPrefab]--;
+                Debug.Log("reduced count");
+            }
+        }
+        else
+        {
+            Debug.Log("Not reduced enemy probably destroyed before this gets called");
+        }
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
     void SpawnEnemyServerRpc(Vector3 position, ulong playerIndex)
     {
-        GameObject spawnedEnemy = Instantiate(enemy, position, enemy.transform.rotation);
-        spawnedEnemy.GetComponent<TargetHolder>().target = NetworkManager.Singleton.ConnectedClients[playerIndex].PlayerObject.transform;
-        spawnedEnemy.GetComponent<NetworkObject>().Spawn();
-        enemyCount++;
+        var validEnemies = enemySpawnChances[difficultyLevel].enemies
+            .Where(e => spawnedEnemyCounts[e.enemy] < e.maxInGame)
+            .ToList();
+
+        if (validEnemies.Count == 0)
+        {
+            Debug.Log("No enemies available to spawn (all reached maxInGame)");
+            return;
+        }
+
+        float totalChance = validEnemies.Sum(e => e.chance);
+        float roll = Random.Range(0f, totalChance);
+
+        float cumulativeChance = 0f;
+        foreach (var entry in validEnemies)
+        {
+            cumulativeChance += entry.chance;
+            if (roll <= cumulativeChance)
+            {
+                Debug.Log("Spawned: " + entry.enemy.name);
+                GameObject spawnedEnemy = Instantiate(entry.enemy, position, enemy.transform.rotation);
+                spawnedEnemyCounts[entry.enemy]++;
+
+                TargetHolder holder = spawnedEnemy.GetComponent<TargetHolder>();
+                holder.target = NetworkManager.Singleton.ConnectedClients[playerIndex].PlayerObject.transform;
+                holder.manager = this;
+                holder.enemyPrefab = entry.enemy;
+                spawnedEnemy.GetComponent<NetworkObject>().Spawn();
+
+                enemyCount++;
+                break;
+            }
+        }
+
     }
 }

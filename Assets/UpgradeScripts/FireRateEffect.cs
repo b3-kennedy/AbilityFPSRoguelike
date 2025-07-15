@@ -16,7 +16,7 @@ public class FireRateEffect : UpgradeEffect
     public override void OnSpawned()
     {
         base.OnSpawned();
-        SetToolTipDescription($"Increase fire rate by {100 * value} %");
+        SetToolTipDescription($"Increase fire rate by {100 * (1-value)} %");
         
     }
 

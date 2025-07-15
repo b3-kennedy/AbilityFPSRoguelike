@@ -273,7 +273,24 @@ MonoBehaviour:
   baseSpawnInterval: 2
   maxSpawnDistance: 100
   minSpawnDistance: 40
+  difficultyLevel: 0
   canSpawn: 0
+  difficultyIncreaseInterval: 60
+  enemySpawnChances:
+  - enemies:
+    - enemy: {fileID: 4066426994913120135, guid: 7140c620cb0a02e4bb68a69b15a449fc, type: 3}
+      chance: 50
+      maxInGame: 50
+    - enemy: {fileID: 2145894574761024606, guid: e61a0748eb568394daedf492ed3ab661, type: 3}
+      chance: 50
+      maxInGame: 10
+  - enemies:
+    - enemy: {fileID: 4066426994913120135, guid: 7140c620cb0a02e4bb68a69b15a449fc, type: 3}
+      chance: 50
+      maxInGame: 50
+    - enemy: {fileID: 2145894574761024606, guid: e61a0748eb568394daedf492ed3ab661, type: 3}
+      chance: 50
+      maxInGame: 10
 --- !u!1 &1070227142
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,8 +613,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7996073207296138521, guid: d0bad616f5b2a6246895811be1fd4060, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
