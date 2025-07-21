@@ -16,6 +16,7 @@ public class EnemySpawnChance
 [System.Serializable]
 public class EnemySpawn
 {
+    public int maxEnemyCount;
     public List<EnemySpawnChance> enemies;
 }
 
@@ -32,9 +33,8 @@ public class EnemySpawnManager : NetworkBehaviour
     float spawnInterval;
     float spawnTimer;
     public int difficultyLevel;
-
+    int enemyCount;
     public bool canSpawn = false;
-    int enemyCount = 0;
     float gameTimer;
     public float difficultyIncreaseInterval;
     int lastLoggedTime;
@@ -85,7 +85,7 @@ public class EnemySpawnManager : NetworkBehaviour
         if (!IsServer) return;
 
 
-        if (canSpawn && enemyCount < 100)
+        if (canSpawn)
         {
             gameTimer += Time.deltaTime;
             spawnTimer += Time.deltaTime;
@@ -172,6 +172,8 @@ public class EnemySpawnManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     void SpawnEnemyServerRpc(Vector3 position, ulong playerIndex)
     {
+        if (enemyCount > enemySpawnChances[difficultyLevel].maxEnemyCount) return;
+
         var validEnemies = enemySpawnChances[difficultyLevel].enemies
             .Where(e => spawnedEnemyCounts[e.enemy] < e.maxInGame)
             .ToList();

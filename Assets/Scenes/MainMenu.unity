@@ -277,14 +277,16 @@ MonoBehaviour:
   canSpawn: 0
   difficultyIncreaseInterval: 60
   enemySpawnChances:
-  - enemies:
+  - maxEnemyCount: 50
+    enemies:
     - enemy: {fileID: 4066426994913120135, guid: 7140c620cb0a02e4bb68a69b15a449fc, type: 3}
       chance: 50
       maxInGame: 50
     - enemy: {fileID: 2145894574761024606, guid: e61a0748eb568394daedf492ed3ab661, type: 3}
       chance: 50
       maxInGame: 10
-  - enemies:
+  - maxEnemyCount: 50
+    enemies:
     - enemy: {fileID: 4066426994913120135, guid: 7140c620cb0a02e4bb68a69b15a449fc, type: 3}
       chance: 50
       maxInGame: 50
